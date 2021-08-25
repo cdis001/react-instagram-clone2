@@ -9,6 +9,8 @@ const App = () => {
     <Router className="App">
       <Switch>
         <Route path="/" exact component={LoginForm} />
+        {/*https://www.instagram.com/accounts/login/?source=auth_switcher*/}
+        <Route path="/accounts/login" exact component={LoginForm} />
       </Switch>
     </Router>
   );
