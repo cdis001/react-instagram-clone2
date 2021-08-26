@@ -8,7 +8,8 @@ import title_logo from "../../resources/images/title_logo.png";
 import InputForm from "../InputForm";
 
 const isId = (text) => {
-  const emailRegex = /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+  const emailRegex =
+    /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
   const phoneRegex = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
 
   return emailRegex.test(text) || phoneRegex.test(text);
@@ -39,7 +40,7 @@ const SignUpForm = () => {
   const signUpBtn = (e) => {
     e.preventDefault();
     setValidContent(``);
-    console.log("회원가입")
+    console.log("회원가입");
 
     // let userData = { name, accountName, password, email };
     // dispatch(emailSignup(userData)).then((res) => {
@@ -66,113 +67,111 @@ const SignUpForm = () => {
   };
 
   return (
-    <section className={"auth-component"}>
-      <div className="auth-container">
-        <div className="auth-box">
-          <img className="title-logo" src={title_logo} alt="title_logo" />
-          <h2 className="title-text">
-            친구들의 사진과 동영상을 보려면 가입하세요.
-          </h2>
-          <button type="submit" className="signin-btn">
-            <GrFacebook
-              style={{
-                marginRight: 8,
-                width: 16,
-                height: 16,
-                position: "relative",
-                top: 2,
-              }}
-            />
-            <span>Facebook으로 로그인</span>
-          </button>
+    <div>
+      <div className="auth-box">
+        <img className="title-logo" src={title_logo} alt="title_logo" />
+        <h2 className="title-text">
+          친구들의 사진과 동영상을 보려면 가입하세요.
+        </h2>
+        <button type="submit" className="signin-btn">
+          <GrFacebook
+            style={{
+              marginRight: 8,
+              width: 16,
+              height: 16,
+              position: "relative",
+              top: 2,
+            }}
+          />
+          <span>Facebook으로 로그인</span>
+        </button>
 
-          <div className="line-div">
-            <div className="signin-line" />
-            <span className="line-span">또는</span>
-            <div className="signin-line" />
-          </div>
+        <div className="line-div">
+          <div className="signin-line" />
+          <span className="line-span">또는</span>
+          <div className="signin-line" />
+        </div>
 
-          <form className="form" method="post">
-            <InputForm
-              type="text"
-              placeholder="이메일 주소"
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              name="email"
-              value={email}
-              valueCheck={isId}
-              onKeyPress={onKeyPress}
-            />
-            <InputForm
-              type="text"
-              placeholder="성명"
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-              name="userName"
-              value={name}
-              valueCheck={isUserName}
-              onKeyPress={onKeyPress}
-            />
-            <InputForm
-              type="text"
-              placeholder="사용자 이름"
-              onChange={(e) => {
-                setAccountName(e.target.value);
-              }}
-              name="nickname"
-              value={accountName}
-              valueCheck={isNickName}
-              onKeyPress={onKeyPress}
-            />
-            <InputForm
-              type="password"
-              placeholder="비밀번호"
-              className="form-input"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              name="password"
-              value={password}
-              valueCheck={isPassword}
-              onKeyPress={onKeyPress}
-            />
+        <form className="form" method="post">
+          <InputForm
+            type="text"
+            placeholder="이메일 주소"
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            name="email"
+            value={email}
+            valueCheck={isId}
+            onKeyPress={onKeyPress}
+          />
+          <InputForm
+            type="text"
+            placeholder="성명"
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+            name="userName"
+            value={name}
+            valueCheck={isUserName}
+            onKeyPress={onKeyPress}
+          />
+          <InputForm
+            type="text"
+            placeholder="사용자 이름"
+            onChange={(e) => {
+              setAccountName(e.target.value);
+            }}
+            name="nickname"
+            value={accountName}
+            valueCheck={isNickName}
+            onKeyPress={onKeyPress}
+          />
+          <InputForm
+            type="password"
+            placeholder="비밀번호"
+            className="form-input"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            name="password"
+            value={password}
+            valueCheck={isPassword}
+            onKeyPress={onKeyPress}
+          />
 
-            <button
-              type="submit"
-              className="signin-btn"
-              disabled={
-                name.length > 0 &&
-                accountName.length > 0 &&
-                accountName.length > 0 &&
-                password.length > 5
-                  ? false
-                  : true
-              }
-              onClick={() => {}}
-            >
-              가입
-            </button>
-          </form>
-
-          <p
-            aria-atomic={true}
-            className={
-              validContent.length > 0 ? "signin-invalid" : "hide-content"
+          <button
+            type="submit"
+            className="signin-btn"
+            disabled={
+              name.length > 0 &&
+              accountName.length > 0 &&
+              accountName.length > 0 &&
+              password.length > 5
+                ? false
+                : true
             }
+            onClick={() => {}}
           >
-            {validContent}
-          </p>
-        </div>
+            가입
+          </button>
+        </form>
 
-        <div className="signup-box">
-          <p className="signup-text">
-            계정이 있으신가요? <Link to="/accounts/login">로그인</Link>
-          </p>
-        </div>
+        <p
+          aria-atomic={true}
+          className={
+            validContent.length > 0 ? "signin-invalid" : "hide-content"
+          }
+        >
+          {validContent}
+        </p>
       </div>
-    </section>
+
+      <div className="signup-box">
+        <p className="signup-text">
+          계정이 있으신가요? <Link to="/accounts/login">로그인</Link>
+        </p>
+      </div>
+    </div>
   );
 };
 

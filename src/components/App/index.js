@@ -4,16 +4,17 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import "./index.css";
 import LoginForm from "../Auth/login";
 import SignUpForm from "../Auth/signup";
+import Auth from "../Auth";
 
 const App = () => {
   return (
     <Router className="App">
       <Switch>
-        <Route path="/" exact component={SignUpForm} />
+        <Route path="/" exact component={Auth} />
         {/* https://www.instagram.com/accounts/login/?source=auth_switcher */}
-        <Route path="/accounts/login" exact component={LoginForm} />
+        <Route path="/accounts/login" exact component={() => <Auth action="login" />} />
         {/* https://www.instagram.com/accounts/emailsignup/ */}
-        <Route path="/accounts/emailsignup" exact component={SignUpForm} />
+        <Route path="/accounts/emailsignup" exact component={() => <Auth action="signup" />} />
       </Switch>
     </Router>
   );
