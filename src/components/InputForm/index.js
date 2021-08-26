@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
-  faTimesCircle,
-} from "@fortawesome/free-solid-svg-icons";
+  faTimesCircle
+} from "@fortawesome/free-regular-svg-icons";
 
 import "./index.css";
 
@@ -65,9 +65,9 @@ const InputForm = ({
         //   className="input-mark "
         // />
         isChecked ? (
-          <FontAwesomeIcon icon={faCheckCircle} />
+          <FontAwesomeIcon icon={faCheckCircle} className={"check-icon-size " + "color-gray "} />
         ) : (
-          <FontAwesomeIcon icon={faTimesCircle} />
+          <FontAwesomeIcon icon={faTimesCircle} className={"check-icon-size " + "color-red "} />
         )
       ) : null}
 
