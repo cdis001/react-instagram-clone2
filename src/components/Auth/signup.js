@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GrFacebook } from "react-icons/gr";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import "./index.css";
 import "../../resources/button.css";
 import title_logo from "../../resources/images/title_logo.png";
 import InputForm from "../InputForm";
+import { emailSignup } from "../../redux/actions";
+// import {history} from "../../redux/store"
 
 const isId = (text) => {
   const emailRegex =
@@ -32,31 +35,38 @@ const isPassword = (text) => {
 
 const SignUpForm = () => {
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
+  const [userName, setUserName] = useState("");
   const [accountName, setAccountName] = useState("");
   const [password, setPassword] = useState("");
   const [validContent, setValidContent] = useState("");
 
+  useEffect(() => {
+    const htmlTitle = document.querySelector("title");
+    htmlTitle.innerHTML = "가입하기";
+  }, []);
+
+  const dispatch = useDispatch();
+  let history = useHistory();
+
   const signUpBtn = (e) => {
     e.preventDefault();
     setValidContent(``);
-    console.log("회원가입");
 
-    // let userData = { name, accountName, password, email };
-    // dispatch(emailSignup(userData)).then((res) => {
-    //   console.log(res);
-    //   const { payload } = res;
+    let userData = { userName, accountName, password, email };
+    dispatch(emailSignup(userData)).then((res) => {
+      console.log(res);
+      const { payload } = res;
 
-    //   if (payload.status === 200) {
-    //     alert(`${name}님, instagram에 오신것을 환영합니다!`);
-    //     history.push("/accounts/login");
-    //   } else {
-    //     const errorMessage = payload.data.message;
-    //     if (!isId(name)) {
-    //       setValidContent(errorMessage);
-    //     }
-    //   }
-    // });
+      if (payload.status === 200 || payload.status === 201) {
+        alert(`${userName}님, instagram에 오신것을 환영합니다!`);
+        history.push("/accounts/login");
+      } else {
+        const errorMessage = payload.data.message;
+        if (!isId(userName)) {
+          setValidContent(errorMessage);
+        }
+      }
+    });
   };
 
   const onKeyPress = (e) => {
@@ -108,10 +118,10 @@ const SignUpForm = () => {
             type="text"
             placeholder="성명"
             onChange={(e) => {
-              setName(e.target.value);
+              setUserName(e.target.value);
             }}
             name="userName"
-            value={name}
+            value={userName}
             valueCheck={isUserName}
             onKeyPress={onKeyPress}
           />
@@ -143,14 +153,14 @@ const SignUpForm = () => {
             type="submit"
             className="signin-btn"
             disabled={
-              name.length > 0 &&
+              userName.length > 0 &&
               accountName.length > 0 &&
               accountName.length > 0 &&
               password.length > 5
                 ? false
                 : true
             }
-            onClick={() => {}}
+            onClick={signUpBtn}
           >
             가입
           </button>
