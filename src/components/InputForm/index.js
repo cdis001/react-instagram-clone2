@@ -65,9 +65,9 @@ const InputForm = ({
         //   className="input-mark "
         // />
         isChecked ? (
-          <FontAwesomeIcon icon={faCheckCircle} className={"check-icon-size " + "color-gray "} />
+          <FontAwesomeIcon icon={faCheckCircle} className={"check-icon-size " + "color-gray " + "input-mark "} />
         ) : (
-          <FontAwesomeIcon icon={faTimesCircle} className={"check-icon-size " + "color-red "} />
+          <FontAwesomeIcon icon={faTimesCircle} className={"check-icon-size " + "color-red " + "input-mark "} />
         )
       ) : null}
 
