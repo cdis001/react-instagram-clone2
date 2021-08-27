@@ -17,8 +17,8 @@ export const emailSignup = (userData) => {
   return { type: EMAIL_SIGNUP, payload: data };
 };
 
-export const loginRequest = (formData) => {
-  const data = axios.post(DOMAIN + "/accounts/login", formData).then(
+export const loginRequest = (userData) => {
+  const data = axios.post(DOMAIN + "/api/auth/login", userData).then(
     (res) => res,
     (error) => error.response
   );

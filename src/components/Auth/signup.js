@@ -72,7 +72,7 @@ const SignUpForm = () => {
   const onKeyPress = (e) => {
     if (e.key == "Enter") {
       e.preventDefault();
-      if (accountName.length > 0) signUpBtn();
+      if (accountName.length > 0) signUpBtn(e);
     }
   };
 

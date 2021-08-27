@@ -1,41 +1,47 @@
 import React, { useState } from "react";
 import { GrFacebook } from "react-icons/gr";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import "./index.css";
 import "../../resources/button.css";
 import title_logo from "../../resources/images/title_logo.png";
 import InputForm from "../InputForm";
+import { loginRequest } from "../../redux/actions";
 
 const LoginForm = () => {
   const [accountName, setAccountName] = useState("");
   const [password, setPassword] = useState("");
+  const [validContent, setValidContent] = useState("");
+
+  let history = useHistory();
+  const dispatch = useDispatch();
 
   const signinBtn = (e) => {
-    // const formData = new FormData();
-    // formData.append("accountName", accountName);
-    // formData.append("password", password);
+    e.preventDefault();
+    let userData = { accountName, password };
 
-    // dispatch(loginRequest(formData)).then((res) => {
-    //   const { payload } = res;
-    //   // console.log(res.payload);
+    dispatch(loginRequest(userData)).then((res) => {
+      const { payload } = res;
+      // console.log(res.payload);
 
-    //   if (payload.status === 200) {
-    //     localStorage.setItem("accountName", accountName);
-    //     history.push("/");
-    //   } else if (payload.status === 401) {
-    //     setValidContent(
-    //       "입력한 사용자 이름을 사용하는 계정을 찾을 수 없습니다. 사용자 이름을 확인하고 다시 시도하세요."
-    //     );
-    //   }
-    // });
-    console.log("로그인");
+      if (payload.status === 201) {
+        console.log("login!");
+        history.push("/");
+      } else if (payload.status === 401) {
+        setValidContent(
+          "입력한 사용자 이름을 사용하는 계정을 찾을 수 없습니다. 사용자 이름을 확인하고 다시 시도하세요."
+        );
+      } else {
+        setValidContent("로그인에 실패했습니다.");
+      }
+    });
   };
 
   const onKeyPress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      if (accountName.length > 0) signinBtn();
+      if (accountName.length > 0) signinBtn(e);
     }
   };
 
@@ -88,6 +94,15 @@ const LoginForm = () => {
               <span>Facebook으로 로그인</span>
             </button>
           </div>
+
+          <p
+            aria-atomic={true}
+            className={
+              validContent.length > 0 ? "signin-invalid" : "hide-content"
+            }
+          >
+            {validContent}
+          </p>
 
           <Link className="forgotLink" to="/accounts/password/reset">
             비밀번호를 잊으셨나요?
