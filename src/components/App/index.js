@@ -3,12 +3,14 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
 import "./index.css";
 import Auth from "../Auth";
+import Home from "../Home";
 
 const App = () => {
   return (
     <Router className="App">
       <Switch>
-        <Route path="/" exact component={Auth} />
+        {/* https://www.instagram.com/ */}
+        <Route path="/" exact component={Home} />
         {/* https://www.instagram.com/accounts/login/?source=auth_switcher */}
         <Route path="/accounts/login" exact component={() => <Auth action="login" />} />
         {/* https://www.instagram.com/accounts/emailsignup/ */}
