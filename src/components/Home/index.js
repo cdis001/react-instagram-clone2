@@ -78,7 +78,26 @@ const Home = () => {
               <p className="home-user-content ">content</p>
             </div>
           </div>
-          {/* <RecommendContent type="short" data={data} /> */}
+          <div className={"user-recommend-container "}>
+            <div className={" user-recommend-title "}>
+              <h4>회원님을 위한 추천</h4>
+              <Link to="/explore/people/suggested">모두 보기</Link>
+            </div>
+            <div className={"user-recommend-div "}>
+              <div className={"user-recommend-content "}>
+                <div className={"recommend-user-photo "} src={"https://i.guim.co.uk/img/media/976161556e63867b492868c15e86ea71b4165c52/0_165_5315_3189/master/5315.jpg?width=1200&height=1200&quality=85&auto=format&fit=crop&s=b4e203c07941288dab171a18905ad374"} />
+                <div className={"recommend-user-profile "}>
+                  <Link className={"recommend-user-name "} to={"/"}>
+                    userName01
+                  </Link>
+                  <span className={"recommend-user-content "}>content</span>
+                </div>
+                <button className={"white-blue-btn " + "user-follow-btn "}>
+                  팔로우
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

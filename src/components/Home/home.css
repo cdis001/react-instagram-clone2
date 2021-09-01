@@ -84,3 +84,141 @@
   text-overflow: ellipsis;
   flex: 1 1 auto;
 }
+
+/* .user-recommend-container {
+  padding-top: 30px;
+  flex: 1;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+}
+
+.user-recommend-title {
+  color: #262626;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  margin: -6px 0;
+}
+
+.user-recommend-div {
+  margin: 16px 0 32px;
+  padding: 4px 0;
+  flex: 0 0 auto;
+  background-color: #fff;
+  box-sizing: border-box;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+}
+
+.user-recommend-content {
+  padding: 8px 16px;
+  flex-direction: row;
+  align-items: center;
+}
+
+.recommend-user-photo {
+  background-color: #ccc;
+  border-radius: 50%;
+  height: 44px;
+  width: 44px;
+  margin-right: 12px;
+  margin-top: 1px;
+}
+*/
+.recommend-user-profile {
+  flex: 1 1 auto;
+}
+
+.recommend-user-profile span {
+  color: #8e8e8e;
+  font-weight: 400;
+}
+/*
+.recommend-user-name {
+  color: #262626;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.recommend-user-content {
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.user-popular {
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.user-follow-btn {
+  margin: 10px 0 10px 8px;
+} */
+
+.user-recommend-container {
+  width: calc(100% + 32px);
+  margin: 0 0 12px -16px;
+}
+
+.user-recommend-title {
+  margin-top: 12px;
+  padding: 3px 16px;
+  flex: 0 0 auto;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.user-recommend-title h4 {
+  flex: 1 1 auto;
+  color: #8e8e8e;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.user-recommend-title a {
+  color: #262626;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.user-recommend-div {
+  flex-direction: column;
+  margin: 0 0 4px 4px;
+  padding: 8px 0;
+}
+
+.user-recommend-content {
+  padding: 8px 16px;
+  flex-direction: row;
+}
+
+.recommend-user-photo {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin-right: 12px;
+}
+
+.recommend-user-name {
+  color: #262626;
+  font-weight: 600;
+  font-size: 14px;
+  text-overflow: ellipsis;
+}
+
+.recommend-user-content {
+  margin-top: 4px;
+  font-size: 12px;
+  text-overflow: ellipsis;
+}
+
+.user-follow-btn {
+  font-size: 12px;
+  line-height: 14px;
+  padding: 0;
+}
