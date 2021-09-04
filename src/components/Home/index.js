@@ -63,17 +63,17 @@ const Home = () => {
       {/* <Header /> */}
       <div className={"home-content-container "}>
         <div className={"home-content-left "}>
-          <article className={"shorted-feed-article"}>
-            <header className={"shorted-feed-header"}>
+          <article className={"feed-article"}>
+            <header className={"feed-header"}>
               <div className={"feed-header-photo"} />
-              <div className={"shorted-feed-header-content"}>
+              <div className={"feed-header-content"}>
                 <Link to={`/`} className={"feed-username"}>
                   accountName01
                 </Link>
                 <p>Location1</p>
               </div>
               <button
-                className={"shorted-feed-header-btn"}
+                className={"feed-header-btn"}
                 onClick={(e) => console.log("button")}
               >
                 ...
@@ -81,13 +81,13 @@ const Home = () => {
             </header>
 
             <img
-              className={"shorted-feed-photo"}
+              className={"feed-photo"}
               // src={imgSrc}
               src={`http://www.astronomer.rocks/news/photo/201802/82361_623_1441.jpeg`}
               sizes={"614px"}
               alt={"feedImg"}
             />
-            <div className={"shorted-feed-activate"}>
+            <div className={"feed-activate"}>
               <div className="feed-actions">
                 <button onClick={() => console.log("123")}>
                   <FontAwesomeIcon icon={faHeart} className={"feed-action-icons "}/>
@@ -105,12 +105,12 @@ const Home = () => {
 
               <div className={"feed-comment"}>
                 <h3 className={"margin-b-8"}>좋아요 3000개</h3>
-                <div className={"shorted-feed-comment-user " + "margin-b-4 "}>
+                <div className={"feed-comment-user " + "margin-b-4 "}>
                   <h3 className={""}>accountName01&nbsp;</h3>
                   <p>
                     123123123123123
                     {/* <button
-                      className={"shorted-feed-comment-btn"}
+                      className={"feed-comment-btn"}
                       onClick={() => setIsContentShown(!isContentShown)}
                       onClick={() => console.log("click")}
                     >
@@ -119,12 +119,12 @@ const Home = () => {
                   </p>
                 </div>
                 <Link
-                  className={"shorted-feed-comment-btn " + "margin-b-4 "}
+                  className={"feed-comment-btn " + "margin-b-4 "}
                   to={{ pathname: `/` }}
                 >
                   댓글 5개 모두 보기
                 </Link>
-                <div className={"shorted-feed-comment-component"}>
+                <div className={"feed-comment-component"}>
                   <h3>username2</h3>
                   <p>&nbsp;content</p>
                 <button onClick={() => console.log("123")}>
