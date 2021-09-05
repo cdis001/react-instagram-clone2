@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { faBookmark, faComment, faHeart, faPaperPlane, faSmile } from "@fortawesome/free-regular-svg-icons";
+import {
+  faBookmark,
+  faComment,
+  faHeart,
+  faPaperPlane,
+  faSmile,
+} from "@fortawesome/free-regular-svg-icons";
 // import {  } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-// import { fetchImages } from "../../redux/actions";
+import { getFeeds } from "../../redux/actions";
 // import Header from "../Header";
 import "./home.css";
 import "./feed.css";
@@ -39,16 +45,16 @@ const Home = () => {
     // const token = localStorage.getItem("accountName") || "";
     // // console.log(token);
 
-    // dispatch(fetchImages()).then((res) => {
-    //   // console.log(res);
-    //   const { payload } = res;
+    dispatch(getFeeds()).then((res) => {
+      // console.log(res);
+      const { payload } = res;
 
-    //   if (payload.status === 200) {
-    //     const data = payload.data.content;
-    //     setFeeds(data);
-    //   } else {
-    //   }
-    // });
+      if (payload.status === 200) {
+        const data = payload.data;
+        setFeeds(data);
+      } else {
+      }
+    });
 
     // if (token.length <= 0) {
     //   history.push("/accounts/login");
@@ -90,16 +96,28 @@ const Home = () => {
             <div className={"feed-activate"}>
               <div className="feed-actions">
                 <button onClick={() => console.log("123")}>
-                  <FontAwesomeIcon icon={faHeart} className={"feed-action-icons "}/>
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    className={"feed-action-icons "}
+                  />
                 </button>
                 <button>
-                  <FontAwesomeIcon icon={faComment} className={"feed-action-icons "}/>
+                  <FontAwesomeIcon
+                    icon={faComment}
+                    className={"feed-action-icons "}
+                  />
                 </button>
                 <button>
-                  <FontAwesomeIcon icon={faPaperPlane} className={"feed-action-icons "}/>
+                  <FontAwesomeIcon
+                    icon={faPaperPlane}
+                    className={"feed-action-icons "}
+                  />
                 </button>
                 <button onClick={() => console.log("123")}>
-                  <FontAwesomeIcon icon={faBookmark} className={"feed-action-icons "}/>
+                  <FontAwesomeIcon
+                    icon={faBookmark}
+                    className={"feed-action-icons "}
+                  />
                 </button>
               </div>
 
@@ -127,14 +145,20 @@ const Home = () => {
                 <div className={"feed-comment-component"}>
                   <h3>username2</h3>
                   <p>&nbsp;content</p>
-                <button onClick={() => console.log("123")}>
-                  <FontAwesomeIcon icon={faHeart} className={"feed-comment-icon "}/>
+                  <button onClick={() => console.log("123")}>
+                    <FontAwesomeIcon
+                      icon={faHeart}
+                      className={"feed-comment-icon "}
+                    />
                   </button>
                 </div>
                 <p className={"datetime"}>4일 전</p>
               </div>
               <div className={"feed-comment-box"}>
-                  <FontAwesomeIcon icon={faSmile} className={"feed-action-icons " + "padding-r-16 "}/>
+                <FontAwesomeIcon
+                  icon={faSmile}
+                  className={"feed-action-icons " + "padding-r-16 "}
+                />
                 <textarea
                   placeholder={"댓글 달기..."}
                   // value={commentText}
