@@ -12,7 +12,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { getFeeds } from "../../redux/actions";
-// import Header from "../Header";
+import Header from "../Header";
 import "./home.css";
 import "./feed.css";
 import "../../resources/button.css";
@@ -66,7 +66,7 @@ const Home = () => {
 
   return (
     <section className={"home-section "}>
-      {/* <Header /> */}
+      <Header />
       <div className={"home-content-container "}>
         <div className={"home-content-left "}>
           <article className={"feed-article"}>
