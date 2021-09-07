@@ -57,7 +57,6 @@ const LikedBoard = ({ isLikedBoardContent, data }) => {
     return (
       <>
         <div className={"menu-like-img "}>
-          {/* <img src={Like} alt="menu-like-img" /> */}
           <FontAwesomeIcon icon={faHeart} />
         </div>
         <h2>게시물 활동</h2>
