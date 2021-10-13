@@ -1,0 +1,164 @@
+[
+  {
+    "id": 1,
+    "contents": "123",
+    "location": "home",
+    "files": [
+      {
+        "id": 1,
+        "src": "https://news.imaeil.com/photos/2019/10/01/2019100114115105152_l.jpg"
+      }
+    ],
+    "comments": [
+      { "id": 1, "contents": "comment1", "user": { "userName": "userName01" } },
+      { "id": 2, "contents": "comment2", "user": { "userName": "userName02" } },
+      { "id": 3, "contents": "comment3", "user": { "userName": "userName03" } }
+    ],
+    "like": [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+    "user": { "userName": "userName001" }
+  },
+
+  {
+    "id": 2,
+    "contents": "123",
+    "location": "home",
+    "files": [
+      {
+        "id": 1,
+        "src": "https://www.sisaweek.com/news/photo/202004/132716_121857_70.jpg"
+      }
+    ],
+    "comments": [],
+    "like": [
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {}
+    ],
+    "user": { "userName": "userName002" }
+  },
+  {
+    "id": 3,
+    "contents": "123",
+    "location": "home",
+    "files": [
+      {
+        "id": 1,
+        "src": "https://image.ytn.co.kr/general/jpg/2021/0721/202107211022017960_t.jpg"
+      }
+    ],
+    "comments": [],
+    "like": [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+    "user": { "userName": "userName003" }
+  },
+  {
+    "id": 4,
+    "contents": "123",
+    "location": "home",
+    "files": [
+      {
+        "id": 1,
+        "src": "https://images.chosun.com/resizer/5RWpufchdlBjPzWIZnKrDum_yl0=/600x399/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/WO4SKPUA62ESBOT2QY7QB5XTAI.jpg"
+      }
+    ],
+    "comments": [],
+    "like": [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+    "user": { "userName": "userName004" }
+  },
+  {
+    "id": 5,
+    "contents": "123",
+    "location": "home",
+    "files": [
+      {
+        "id": 1,
+        "src": "https://news.imaeil.com/photos/2019/10/01/2019100114115105152_l.jpg"
+      },
+      {
+        "id": 2,
+        "src": "https://img.animalplanet.co.kr/news/2019/10/31/700/191lerah0b366ig7n50c.jpg"
+      }
+    ],
+    "comments": [],
+    "like": [
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {}
+    ],
+    "user": { "userName": "userName005" }
+  },
+  {
+    "id": 6,
+    "contents": "123",
+    "location": "home",
+    "files": [
+      {
+        "id": 1,
+        "src": "https://img.insight.co.kr/static/2020/12/18/700/img_20201218143147_2iw2d630.webp"
+      }
+    ],
+    "comments": [],
+    "like": [
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {}
+    ],
+    "user": { "userName": "userName006" }
+  }
+]

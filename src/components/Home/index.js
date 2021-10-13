@@ -1,20 +1,12 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import {
-  faBookmark,
-  faComment,
-  faHeart,
-  faPaperPlane,
-  faSmile,
-} from "@fortawesome/free-regular-svg-icons";
-// import {  } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { getFeeds } from "../../redux/actions";
+import Feed from "../Feed";
 import Header from "../Header";
+import feedsData from "./feedsData.json";
 import "./home.css";
-import "./feed.css";
 import "../../resources/button.css";
 
 const useWindowSize = () => {
@@ -41,20 +33,21 @@ const Home = () => {
   useEffect(() => {
     const htmlTitle = document.querySelector("title");
     htmlTitle.innerHTML = "Instagram";
+    setFeeds(feedsData);
 
     // const token = localStorage.getItem("accountName") || "";
     // // console.log(token);
 
-    dispatch(getFeeds()).then((res) => {
-      // console.log(res);
-      const { payload } = res;
+    // dispatch(getFeeds()).then((res) => {
+    //   // console.log(res);
+    //   const { payload } = res;
 
-      if (payload.status === 200) {
-        const data = payload.data;
-        setFeeds(data);
-      } else {
-      }
-    });
+    //   if (payload.status === 200) {
+    //     const data = payload.data;
+    //     setFeeds(data);
+    //   } else {
+    //   }
+    // });
 
     // if (token.length <= 0) {
     //   history.push("/accounts/login");
@@ -69,110 +62,9 @@ const Home = () => {
       <Header />
       <div className={"home-content-container "}>
         <div className={"home-content-left "}>
-          <article className={"feed-article"}>
-            <header className={"feed-header"}>
-              <div className={"feed-header-photo"} />
-              <div className={"feed-header-content"}>
-                <Link to={`/`} className={"feed-username"}>
-                  accountName01
-                </Link>
-                <p>Location1</p>
-              </div>
-              <button
-                className={"feed-header-btn"}
-                onClick={(e) => console.log("button")}
-              >
-                ...
-              </button>
-            </header>
-
-            <img
-              className={"feed-photo"}
-              // src={imgSrc}
-              src={`http://www.astronomer.rocks/news/photo/201802/82361_623_1441.jpeg`}
-              sizes={"614px"}
-              alt={"feedImg"}
-            />
-            <div className={"feed-activate"}>
-              <div className="feed-actions">
-                <button onClick={() => console.log("123")}>
-                  <FontAwesomeIcon
-                    icon={faHeart}
-                    className={"feed-action-icons "}
-                  />
-                </button>
-                <button>
-                  <FontAwesomeIcon
-                    icon={faComment}
-                    className={"feed-action-icons "}
-                  />
-                </button>
-                <button>
-                  <FontAwesomeIcon
-                    icon={faPaperPlane}
-                    className={"feed-action-icons "}
-                  />
-                </button>
-                <button onClick={() => console.log("123")}>
-                  <FontAwesomeIcon
-                    icon={faBookmark}
-                    className={"feed-action-icons "}
-                  />
-                </button>
-              </div>
-
-              <div className={"feed-comment"}>
-                <h3 className={"margin-b-8"}>좋아요 3000개</h3>
-                <div className={"feed-comment-user " + "margin-b-4 "}>
-                  <h3 className={""}>accountName01&nbsp;</h3>
-                  <p>
-                    123123123123123
-                    {/* <button
-                      className={"feed-comment-btn"}
-                      onClick={() => setIsContentShown(!isContentShown)}
-                      onClick={() => console.log("click")}
-                    >
-                      더 보기
-                    </button> */}
-                  </p>
-                </div>
-                <Link
-                  className={"feed-comment-btn " + "margin-b-4 "}
-                  to={{ pathname: `/` }}
-                >
-                  댓글 5개 모두 보기
-                </Link>
-                <div className={"feed-comment-component"}>
-                  <h3>username2</h3>
-                  <p>&nbsp;content</p>
-                  <button onClick={() => console.log("123")}>
-                    <FontAwesomeIcon
-                      icon={faHeart}
-                      className={"feed-comment-icon "}
-                    />
-                  </button>
-                </div>
-                <p className={"datetime"}>4일 전</p>
-              </div>
-              <div className={"feed-comment-box"}>
-                <FontAwesomeIcon
-                  icon={faSmile}
-                  className={"feed-action-icons " + "padding-r-16 "}
-                />
-                <textarea
-                  placeholder={"댓글 달기..."}
-                  // value={commentText}
-                  // onChange={(e) => setCommentText(e.target.value)}
-                />
-                <button
-                  className={"white-blue-btn"}
-                  // disabled={commentText.length > 0 ? false : true}
-                >
-                  게시
-                </button>
-              </div>
-            </div>
-          </article>
+          {feeds.map((feed) => (
+            <Feed key={feed.id} {...feed} />
+          ))}
         </div>
         <div
           className={"home-content-right "}
