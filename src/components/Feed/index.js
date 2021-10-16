@@ -26,14 +26,14 @@ const FeedComment = ({ contents, user }) => {
   );
 };
 
-const Feed = ({ user, contents, location, files, comments, like }) => {
+const Feed = ({ user, contents, location, files, comments, likes }) => {
   const { userName } = user;
   const feedContents = contents;
   const feedLocation = location;
   const feedImg = files[0].src;
   const feedComments = comments;
   const commentCnt = comments.length;
-  const likeCnt = like.length;
+  const likeCnt = likes.length;
   return (
     <article className={"feed-article"}>
       <header className={"feed-header"}>

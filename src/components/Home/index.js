@@ -33,21 +33,22 @@ const Home = () => {
   useEffect(() => {
     const htmlTitle = document.querySelector("title");
     htmlTitle.innerHTML = "Instagram";
-    setFeeds(feedsData);
+    // setFeeds(feedsData);
 
     // const token = localStorage.getItem("accountName") || "";
     // // console.log(token);
 
-    // dispatch(getFeeds()).then((res) => {
-    //   // console.log(res);
-    //   const { payload } = res;
+    dispatch(getFeeds()).then((res) => {
+      // console.log(res);
+      const { payload } = res;
 
-    //   if (payload.status === 200) {
-    //     const data = payload.data;
-    //     setFeeds(data);
-    //   } else {
-    //   }
-    // });
+      if (payload.status === 200) {
+        const data = payload.data;
+        setFeeds(data);
+      } else {
+        alert("불러오기 실패");
+      }
+    });
 
     // if (token.length <= 0) {
     //   history.push("/accounts/login");
