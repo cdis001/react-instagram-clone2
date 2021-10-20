@@ -1,0 +1,50 @@
+.dm-section {
+  padding-top: 54px;
+}
+
+.dm-content-container {
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+  align-items: center;
+}
+
+.dm-content-box {
+  height: 100%;
+  width: 100%;
+  max-width: 935px;
+  overflow: hidden;
+  flex: 0 0 auto;
+  justify-content: center;
+  align-items: stretch;
+  flex-direction: row;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+}
+
+.dm-content-left {
+  height: 100%;
+  width: 350px;
+  background-color: #fff;
+  border-right: 1px solid #dbdbdb;
+  overflow: hidden;
+  justify-content: flex-start;
+}
+
+.dm-content-right {
+  height: 100%;
+  min-height: 0;
+  min-width: 0;
+  flex: 1 1 auto;
+  justify-content: flex-start;
+  display: flex;
+  background-color: #fff;
+}
+
+.text-style-a {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

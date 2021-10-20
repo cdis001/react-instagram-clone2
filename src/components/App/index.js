@@ -24,6 +24,8 @@ const App = () => {
           exact
           component={() => <Auth action="signup" />}
         />
+        {/* https://www.instagram.com/direct/inbox/ */}
+        <Route path="/direct/inbox/" exact component={DM} />
       </Switch>
     </Router>
   );
