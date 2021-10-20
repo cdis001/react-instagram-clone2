@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { getFeeds } from "../../redux/actions";
 import Feed from "../Feed";
@@ -24,31 +24,25 @@ const useWindowSize = () => {
 
 const Home = () => {
   const [isNewbie, setIsNewbie] = useState(false);
-  const [feeds, setFeeds] = useState([]);
 
   let history = useHistory();
+
   const dispatch = useDispatch();
+  const feeds = useSelector((state) => state.feeds);
+
   const [windowWidth, windowHeight] = useWindowSize();
 
-  useEffect(() => {
+  useEffect(async () => {
     const htmlTitle = document.querySelector("title");
     htmlTitle.innerHTML = "Instagram";
-    // setFeeds(feedsData);
 
     // const token = localStorage.getItem("accountName") || "";
     // // console.log(token);
 
-    dispatch(getFeeds()).then((res) => {
-      // console.log(res);
-      const { payload } = res;
-
-      if (payload.status === 200) {
-        const data = payload.data;
-        setFeeds(data);
-      } else {
-        alert("불러오기 실패");
-      }
-    });
+    const { status } = await dispatch(getFeeds());
+    if (status !== 200) {
+      alert("불러오기 실패");
+    }
 
     // if (token.length <= 0) {
     //   history.push("/accounts/login");
