@@ -29,7 +29,22 @@ const DirectInbox = () => {
       <Header />
       <div className={"dm-content-container "}>
         <div className={"dm-content-box "}>
-          <div className={"dm-content-left "}></div>
+          <div className={"dm-content-left "}>
+            <div className={"dm-left-header "}>
+              <div className={"dm-left-foo "} />
+              <span className={"dm-user-name "}>userName01</span>
+              <FontAwesomeIcon
+                icon={faEdit}
+                className={"dm-left-header-icon "}
+              />
+            </div>
+            <div className={"dm-left-content "}>
+              <LeftContent />
+              <LeftContent />
+              <LeftContent />
+              <LeftContent />
+            </div>
+          </div>
           <div className={"dm-content-right "}></div>
         </div>
       </div>
