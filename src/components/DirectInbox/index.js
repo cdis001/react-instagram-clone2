@@ -1,5 +1,11 @@
 import React from "react";
-import { faEdit, faPaperPlane } from "@fortawesome/free-regular-svg-icons";
+import {
+  faEdit,
+  faPaperPlane,
+  faSmile,
+  faImage,
+  faHeart,
+} from "@fortawesome/free-regular-svg-icons";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -7,8 +13,69 @@ import Header from "../Header";
 import "./directInbox.css";
 import "../../resources/button.css";
 
+const MessageBox = ({ isSend = true }) => {
+  const isSendMessage = isSend;
+  if (isSendMessage) {
+    return (
+      <div className={"dm-right-message-box "}>
+        <div className={"dm-right-message-profile m-r-8 m-b-8 "} />
+        <div className={"dm-rignt-message-contents m-b-8 "}>
+          <p>
+            contents123contents123contents123contents123contents123contents123contents123contents123contents123contents123
+          </p>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className={"dm-right-message-box dm-jc-end "}>
+        <div className={"dm-rignt-message-contents m-b-8 dm-bgc-ef "}>
+          <p>
+            contents123contents123contents123contents123contents123contents123contents123contents123contents123contents123
+          </p>
+        </div>
+      </div>
+    );
+  }
+};
+
+const MessageComponent = () => {
+  return (
+    <div className={"dm-right-message-main "}>
+      <span className={"dm-message-time-content "}>
+        2020년 7월 18일 오후 6:26
+      </span>
+      <MessageBox isSend={false} />
+      <MessageBox isSend={true} />
+    </div>
+  );
+};
+
 const RightMessageContent = () => {
-  return;
+  return (
+    <div className={"dm-content-right "}>
+      <div className={"dm-header "}>
+        <div className={"dm-header-user "}>
+          <div className={"dm-right-message-profile "} />
+          <span className={"dm-right-user-name "}>userName02</span>
+        </div>
+        <FontAwesomeIcon icon={faInfoCircle} className={"dm-icon-default "} />
+      </div>
+      <MessageComponent />
+      <div className={"dm-right-send-message-component "}>
+        <div className={"dm-right-send-message-box "}>
+          <FontAwesomeIcon icon={faSmile} className={"dm-icon-default "} />
+          <textarea placeholder={"메시지 입력"} />
+          <button>
+            <FontAwesomeIcon icon={faImage} className={"dm-icon-default "} />
+          </button>
+          <button>
+            <FontAwesomeIcon icon={faHeart} className={"dm-icon-default "} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 const RightDefaultContent = () => {
@@ -66,32 +133,7 @@ const DirectInbox = () => {
               <LeftContent />
             </div>
           </div>
-          <div className={"dm-content-right "}>
-            <div className={"dm-header "}>
-              <div className={"dm-header-user "}>
-                <div className={"dm-right-message-profile "} />
-                <span className={"dm-right-user-name "}>userName02</span>
-              </div>
-              <FontAwesomeIcon
-                icon={faInfoCircle}
-                className={"dm-icon-default "}
-              />
-            </div>
-            <div className={"dm-right-message-main "}>
-              <span className={"dm-message-time-content "}>
-                2020년 7월 18일 오후 6:26
-              </span>
-              <div className={"dm-right-message-box "}>
-                <div className={"dm-right-message-profile m-r-8 m-b-8 "} />
-                <div className={"dm-rignt-message-contents m-b-8 "}>
-                  <p>
-                    contents123contents123contents123contents123contents123contents123contents123contents123contents123contents123
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className={"dm-right-send-message-box "}></div>
-          </div>
+          <RightMessageContent />
         </div>
       </div>
     </section>

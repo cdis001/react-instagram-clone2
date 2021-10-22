@@ -221,18 +221,40 @@
   border-radius: 22px;
 }
 
-.dm-bgc-ef {
-  background-color: #efefef;
-}
-
 .dm-rignt-message-contents > p {
   overflow-wrap: break-word;
 }
 
-.dm-right-send-message-box {
+.dm-right-send-message-component {
   padding: 20px;
-  height: 84px;
-  border-top: 1px solid #dbdbdb;
+  /* height: 84px;
+  border-top: 1px solid #dbdbdb; */
+}
+
+.dm-right-send-message-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid #dbdbdb;
+  border-radius: 22px;
+  min-height: 44px;
+  padding-left: 11px;
+  padding-right: 8px;
+}
+
+.dm-right-send-message-box > textarea {
+  margin-right: 4px;
+  flex: 1 1 auto;
+  align-items: stretch;
+  height: 18px;
+  border: 0;
+  overflow: auto;
+  padding: 8px 9px;
+  resize: none;
+}
+
+.dm-right-send-message-box > textarea:focus {
+  outline: 0;
 }
 
 .text-style-a {
@@ -241,6 +263,14 @@
   line-height: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.dm-bgc-ef {
+  background-color: #efefef;
+}
+
+.dm-jc-end {
+  justify-content: flex-end;
 }
 
 .m-t-24 {
