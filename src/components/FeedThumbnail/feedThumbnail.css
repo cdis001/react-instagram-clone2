@@ -1,0 +1,51 @@
+@media (min-width: 736px) {
+}
+
+.feed-thumbnail-container {
+  display: block;
+  flex-direction: column;
+  margin: 0 -28px 0 0;
+  /* display: flex;
+    flex: 0 0 auto;
+    justify-content: flex-start; */
+}
+
+.feed-thumbnail-box-lg {
+  display: block;
+}
+
+.feed-thumbnail-box-md {
+  display: flex;
+  flex-direction: row;
+}
+
+.feed-thumbnail-content-lg {
+  width: calc(66.6666% - 28px);
+  margin: 0 28px 28px 0;
+}
+
+.feed-thumbnail-content-md {
+  width: calc(33.3333% - 28px);
+  margin: 0 28px 28px 0;
+}
+
+.feed-thumbnail-img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.height-293 {
+  height: 293px;
+}
+
+.height-614 {
+  height: 614px;
+}
+
+.float-r {
+  float: right;
+}
+
+.float-l {
+  float: left;
+}

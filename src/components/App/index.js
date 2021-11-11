@@ -5,6 +5,7 @@ import "./index.css";
 import Auth from "../Auth";
 import Home from "../Home";
 import DM from "../DirectInbox";
+import Explore from "../Explore";
 
 const App = () => {
   return (
@@ -25,7 +26,9 @@ const App = () => {
           component={() => <Auth action="signup" />}
         />
         {/* https://www.instagram.com/direct/inbox/ */}
-        <Route path="/direct/inbox/" exact component={DM} />
+        <Route path="/direct/inbox" exact component={DM} />
+        {/* https://www.instagram.com/explore */}
+        <Route path="/explore" exact component={Explore} />
       </Switch>
     </Router>
   );
