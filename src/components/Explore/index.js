@@ -8,9 +8,10 @@ const Explore = () => {
   return (
     <section className={"explore-section "}>
       <Header />
-      <div className={"explore-content-container "}>
+      <div className={"explore-content-container filter-blur"}>
         <FeedThumbnail />
       </div>
+      <h1 className={`preparation-h1`}>준비중</h1>
     </section>
   );
 };

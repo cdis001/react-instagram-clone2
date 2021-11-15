@@ -98,7 +98,7 @@ const RightDefaultContent = () => {
 
 const LeftContent = () => {
   return (
-    <div className={"dm-left-message-profile "}>
+    <div className={"dm-left-message-profile filter-blur "}>
       <div className={"dm-left-profile-img "} />
       <div className={"dm-left-message "}>
         <span className={"dm-left-profile-name text-style-a "}>userName02</span>
@@ -118,7 +118,7 @@ const DirectInbox = () => {
   return (
     <section className={"dm-section "}>
       <Header />
-      <div className={"dm-content-container "}>
+      <div className={"dm-content-container filter-blur "}>
         <div className={"dm-content-box "}>
           <div className={"dm-content-left "}>
             <div className={"dm-header "}>
@@ -133,9 +133,10 @@ const DirectInbox = () => {
               <LeftContent />
             </div>
           </div>
-          <RightMessageContent />
+          <RightDefaultContent />
         </div>
       </div>
+      <h1 className={`preparation-h1`}>준비중</h1>
     </section>
   );
 };
