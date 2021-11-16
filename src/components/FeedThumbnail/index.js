@@ -10,7 +10,7 @@ const RowFeedBox = ({ type = "md", isFloatRight }) => {
   return (
     <div className={[`feed-thumbnail-box${classType}`]}>
       <div className={`feed-thumbnail-content${classType} ${float}`}>
-        <img
+        {/* <img
           className={`feed-thumbnail-img ${imgSize}`}
           src={
             "http://www.jejusori.net/news/photo/202104/328170_336901_1756.jpg"
@@ -18,10 +18,11 @@ const RowFeedBox = ({ type = "md", isFloatRight }) => {
           srcSet={
             "http://www.jejusori.net/news/photo/202104/328170_336901_1756.jpg 1080w"
           }
-        />
+        /> */}
+        <div className={`feed-thumbnail-img ${imgSize} back-ccc`} />
       </div>
       <div className={"feed-thumbnail-content-md"}>
-        <img
+        {/* <img
           className={"feed-thumbnail-img height-293"}
           src={
             "http://www.jejusori.net/news/photo/202104/328170_336901_1756.jpg"
@@ -30,10 +31,11 @@ const RowFeedBox = ({ type = "md", isFloatRight }) => {
           srcSet={
             "http://www.jejusori.net/news/photo/202104/328170_336901_1756.jpg 1080w"
           }
-        />
+        /> */}
+        <div className={`feed-thumbnail-img height-293 back-ccc`} />
       </div>
       <div className={"feed-thumbnail-content-md"}>
-        <img
+        {/* <img
           className={"feed-thumbnail-img height-293"}
           src={
             "http://www.jejusori.net/news/photo/202104/328170_336901_1756.jpg"
@@ -42,7 +44,8 @@ const RowFeedBox = ({ type = "md", isFloatRight }) => {
           srcSet={
             "http://www.jejusori.net/news/photo/202104/328170_336901_1756.jpg 1080w"
           }
-        />
+        /> */}
+        <div className={`feed-thumbnail-img height-293 back-ccc`} />
       </div>
     </div>
   );
