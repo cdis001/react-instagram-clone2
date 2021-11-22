@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import {
   faBookmark,
   faComment,
@@ -11,6 +11,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./feed.css";
+import MenuBox from "../MenuBox";
 
 const FeedComment = ({ contents, user }) => {
   const { userName } = user;
@@ -27,6 +28,10 @@ const FeedComment = ({ contents, user }) => {
 };
 
 const Feed = ({ user, contents, location, files, comments, likes }) => {
+  const [showMenu, setShowMenu] = useState(false);
+
+  let history = useHistory();
+
   const { userName } = user;
   const feedContents = contents;
   const feedLocation = location;
@@ -34,6 +39,25 @@ const Feed = ({ user, contents, location, files, comments, likes }) => {
   const feedComments = comments;
   const commentCnt = comments.length;
   const likeCnt = likes.length;
+
+  const menus = [
+    { id: 1, title: "신고", onClick: () => {}, buttonStyle: "menu-red-b" },
+    {
+      id: 2,
+      title: "팔로우 취소",
+      onClick: () => {},
+      buttonStyle: "menu-red-b",
+    },
+    {
+      id: 3,
+      title: "게시물로 이동",
+      onClick: () => {
+        history.push({ pathname: `/p/1` });
+      },
+    },
+    { id: 4, title: "취소", onClick: () => setShowMenu(false) },
+  ];
+
   return (
     <article className={"feed-article"}>
       <header className={"feed-header"}>
@@ -46,10 +70,12 @@ const Feed = ({ user, contents, location, files, comments, likes }) => {
         </div>
         <button
           className={"feed-header-btn"}
-          onClick={(e) => console.log("button")}
+          // onClick={(e) => console.log("button")}
+          onClick={(e) => setShowMenu(true)}
         >
           ...
         </button>
+        {showMenu ? <MenuBox menus={menus} /> : null}
       </header>
 
       <img

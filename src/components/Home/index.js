@@ -28,7 +28,8 @@ const Home = () => {
   let history = useHistory();
 
   const dispatch = useDispatch();
-  const feeds = useSelector((state) => state.feeds);
+  // const feeds = useSelector((state) => state.feeds);
+  const feeds = feedsData;
 
   const [windowWidth, windowHeight] = useWindowSize();
 
