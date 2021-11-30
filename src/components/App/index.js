@@ -30,7 +30,7 @@ const App = () => {
         <Route path="/direct/inbox" exact component={DM} />
         {/* https://www.instagram.com/explore */}
         <Route path="/explore" exact component={Explore} />
-        {/* https://www.instagram.com/p/ */}
+        {/* https://www.instagram.com/p/CW46CSnLXQh/?utm_medium=share_sheet */}
         <Route path="/p/:id" exact component={FeedDetail} />
       </Switch>
     </Router>

@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./feed.css";
 import MenuBox from "../MenuBox";
+import Header from "../Header";
 
 const FeedComment = ({ contents, user }) => {
   const { userName } = user;
@@ -24,6 +25,34 @@ const FeedComment = ({ contents, user }) => {
         <FontAwesomeIcon icon={faHeart} className={"feed-comment-icon "} />
       </button>
     </div>
+  );
+};
+
+const FeedHeader = ({
+  userName,
+  feedLocation,
+  setShowMenu,
+  showMenu,
+  menus,
+}) => {
+  return (
+    <header className={"feed-header"}>
+      <div className={"feed-header-photo"} />
+      <div className={"feed-header-content"}>
+        <Link to={`/`} className={"feed-username"}>
+          {userName}
+        </Link>
+        <p>{feedLocation}</p>
+      </div>
+      <button
+        className={"feed-header-btn"}
+        // onClick={(e) => console.log("button")}
+        onClick={(e) => setShowMenu(true)}
+      >
+        ...
+      </button>
+      {showMenu ? <MenuBox menus={menus} /> : null}
+    </header>
   );
 };
 
@@ -47,8 +76,8 @@ const Feed = ({
   const feedComments = comments;
   const commentCnt = comments.length;
   const likeCnt = likes.length;
-  const detailType = type === "detail" ? "detail-feed- " : "";
-
+  const detailType = type === "detail" ? "detail-feed-" : null;
+  const isDetail = type === "detail";
   const menus = [
     { id: 1, title: "신고", onClick: () => {}, buttonStyle: "menu-red-b" },
     {
@@ -68,33 +97,35 @@ const Feed = ({
   ];
 
   return (
-    <article className={"feed-article "}>
-      <header className={"feed-header"}>
-        <div className={"feed-header-photo"} />
-        <div className={"feed-header-content"}>
-          <Link to={`/`} className={"feed-username"}>
-            {userName}
-          </Link>
-          <p>{feedLocation}</p>
-        </div>
-        <button
-          className={"feed-header-btn"}
-          // onClick={(e) => console.log("button")}
-          onClick={(e) => setShowMenu(true)}
-        >
-          ...
-        </button>
-        {showMenu ? <MenuBox menus={menus} /> : null}
-      </header>
-
-      <div>
-        <img
-          className={"feed-photo"}
-          src={feedImg}
-          // src={`http://www.astronomer.rocks/news/photo/201802/82361_623_1441.jpeg`}
-          sizes={"614px"}
-          alt={"feedImg"}
+    <article
+      className={`feed-article ${isDetail ? " detail-feed-article" : ""}`}
+    >
+      {isDetail ? null : (
+        <FeedHeader
+          userName={userName}
+          feedLocation={feedLocation}
+          setShowMenu={setShowMenu}
+          showMenu={showMenu}
+          menus={menus}
         />
+      )}
+      <img
+        className={"feed-photo"}
+        src={feedImg}
+        // src={`http://www.astronomer.rocks/news/photo/201802/82361_623_1441.jpeg`}
+        sizes={"614px"}
+        alt={"feedImg"}
+      />
+      <div>
+        {isDetail ? (
+          <FeedHeader
+            userName={userName}
+            feedLocation={feedLocation}
+            setShowMenu={setShowMenu}
+            showMenu={showMenu}
+            menus={menus}
+          />
+        ) : null}
         <div className={"feed-activate"}>
           <div className="feed-actions">
             <button onClick={() => console.log("123")}>
