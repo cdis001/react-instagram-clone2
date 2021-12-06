@@ -7,6 +7,7 @@ import Home from "../Home";
 import DM from "../DirectInbox";
 import Explore from "../Explore";
 import FeedDetail from "../FeedDetail";
+import UserPage from "../UserPage";
 
 const App = () => {
   return (
@@ -32,6 +33,8 @@ const App = () => {
         <Route path="/explore" exact component={Explore} />
         {/* https://www.instagram.com/p/CW46CSnLXQh/?utm_medium=share_sheet */}
         <Route path="/p/:id" exact component={FeedDetail} />
+        {/* https://www.instagram.com/dlwlrma */}
+        <Route path="/:id" exact component={UserPage} />
       </Switch>
     </Router>
   );
