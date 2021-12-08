@@ -22,24 +22,24 @@ const LikedBoard = ({ isLikedBoardContent, data }) => {
   // console.log(data);
 
   if (isLikedBoardContent) {
-  const userName = data.user.user_name;
-  const userProFile = data.user.profile_photo;
+    const userName = data.user.user_name;
+    const userProFile = data.user.profile_photo;
 
-  const activity = data.activity;
-  const commentContent = data.content;
-  const activityForm = () => {
-    switch (activity) {
-      case "like":
-        return `님이 회원님의 사진을 좋아합니다.`;
-      case "comment":
-        return `님이 댓글에서 회원님을 언급했습니다: ${commentContent}`;
-      default:
-        return "";
-    }
-  };
+    const activity = data.activity;
+    const commentContent = data.content;
+    const activityForm = () => {
+      switch (activity) {
+        case "like":
+          return `님이 회원님의 사진을 좋아합니다.`;
+        case "comment":
+          return `님이 댓글에서 회원님을 언급했습니다: ${commentContent}`;
+        default:
+          return "";
+      }
+    };
 
-  const date = data.date;
-  const photo = data.photo;
+    const date = data.date;
+    const photo = data.photo;
     return (
       <>
         <div className="liked-board-content ">
@@ -77,6 +77,7 @@ const Header = ({ mode = "default" }) => {
   const [isUsered, setIsUsered] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [isPlaceholderShown, setIsPlaceholderShown] = useState(false);
+  const [userName, setUserName] = useState("");
 
   const searchInput = useRef();
   const location = useLocation();
@@ -84,6 +85,8 @@ const Header = ({ mode = "default" }) => {
 
   useEffect(() => {
     setPathname(location.pathname);
+
+    setUserName("userName01");
   }, []);
 
   const HeaderContent = () => {
@@ -139,13 +142,19 @@ const Header = ({ mode = "default" }) => {
         <div className="header-btns" tabIndex="0">
           {isLogin ? (
             <>
-              <button className={"header-icon "} onClick={() => history.push('/')}>
+              <button
+                className={"header-icon "}
+                onClick={() => history.push("/")}
+              >
                 <ion-icon
                   class={"header-icon-img "}
                   name={pathname === "/" ? "home-sharp" : "home-outline"}
                 ></ion-icon>
               </button>
-              <button className={"header-icon "} onClick={() => history.push('/direct/inbox')}>
+              <button
+                className={"header-icon "}
+                onClick={() => history.push("/direct/inbox")}
+              >
                 <ion-icon
                   class={"header-icon-img "}
                   name={
@@ -155,7 +164,10 @@ const Header = ({ mode = "default" }) => {
                   }
                 ></ion-icon>
               </button>
-              <button className={"header-icon "} onClick={() => history.push('/explore')}>
+              <button
+                className={"header-icon "}
+                onClick={() => history.push("/explore")}
+              >
                 <ion-icon
                   class={"header-icon-img "}
                   name={pathname === "/explore" ? "compass" : "compass-outline"}
@@ -200,14 +212,16 @@ const Header = ({ mode = "default" }) => {
                         : "liked-board-empty ")
                     }
                   >
-                    {isLikedBoardContent ? 
-                    LIKED_BOARD_DATA.data.map((data) => (
-                      <LikedBoard
-                        isLikedBoardContent={isLikedBoardContent}
-                        data={data}
-                      />
-                    ))
-                     : <LikedBoard isLikedBoardContent={isLikedBoardContent} />}
+                    {isLikedBoardContent ? (
+                      LIKED_BOARD_DATA.data.map((data) => (
+                        <LikedBoard
+                          isLikedBoardContent={isLikedBoardContent}
+                          data={data}
+                        />
+                      ))
+                    ) : (
+                      <LikedBoard isLikedBoardContent={isLikedBoardContent} />
+                    )}
                   </div>
                 </div>
               ) : null}
@@ -245,7 +259,7 @@ const Header = ({ mode = "default" }) => {
                 >
                   <div className={"menu-top " + "menu-top-user "} />
                   <div className={"menu-content "}>
-                    <Link className={"user-menu-a"} to={`/`}>
+                    <Link className={"user-menu-a"} to={`/${userName}`}>
                       <FontAwesomeIcon icon={faUserCircle} />
                       <span>프로필</span>
                     </Link>
