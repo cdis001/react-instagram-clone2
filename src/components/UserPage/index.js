@@ -5,9 +5,38 @@ import { faCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Header from "../Header";
+import "../../resources/button.css";
 import "./userPage.css";
 
+const UserPageBtns = () => {
+  return (
+    <div className={"feed-page-btns"}>
+      <button className={"blue-white-btn margin-l-20"}>팔로우</button>
+    </div>
+  );
+};
+
+const MyPageBtns = () => {
+  return (
+    <div className={"feed-page-btns"}>
+      <button className={"feed-page-profile-setting margin-l-20"}>
+        프로필 편집
+      </button>
+      <button className={"feed-page-user-setting"}>
+        <FontAwesomeIcon
+          icon={faCog}
+          className={"feed-action-icons " + "padding-r-16 "}
+        />
+      </button>
+      <Link className={"feed-page-add"} to="#">
+        +
+      </Link>
+    </div>
+  );
+};
+
 const UserPage = () => {
+  const [isMyPage, setIsMyPage] = useState(true);
   const location = useLocation();
   const userName = location.pathname.slice(1);
 
@@ -23,18 +52,7 @@ const UserPage = () => {
           <div className={"feed-page-user-content"}>
             <div className={"feed-page-user-inform"}>
               <h1>{userName}</h1>
-              <button className={"feed-page-profile-setting"}>
-                프로필 편집
-              </button>
-              <button className={"feed-page-user-setting"}>
-                <FontAwesomeIcon
-                  icon={faCog}
-                  className={"feed-action-icons " + "padding-r-16 "}
-                />
-              </button>
-              <Link className={"feed-page-add"} to="/p/add">
-                +
-              </Link>
+              {isMyPage ? <MyPageBtns /> : <UserPageBtns />}
             </div>
             <ul className={"feed-page-header-ul"}>
               <li>

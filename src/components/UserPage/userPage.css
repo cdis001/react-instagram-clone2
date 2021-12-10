@@ -43,8 +43,11 @@
   font-weight: 300;
 }
 
+.feed-page-btns {
+  flex-direction: row;
+}
+
 .feed-page-profile-setting {
-  margin-left: 20px;
   padding: 0 9px;
   border: 1px solid #dbdbdb;
   border-radius: 4px;
@@ -159,4 +162,8 @@
 
 .feed-page-thumbnail-hover > h2:not(:last-child) {
   margin-right: 30px;
+}
+
+.margin-l-20 {
+  margin-left: 20px;
 }
