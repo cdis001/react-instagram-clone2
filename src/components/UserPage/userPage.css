@@ -1,0 +1,177 @@
+.user-feed-page-section {
+  margin-top: 54px;
+}
+
+.feed-page-container {
+  padding: 30px 20px 0;
+  width: 975px;
+}
+
+.feed-page-header {
+  flex-direction: row;
+  padding-bottom: 44px;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.feed-page-user-photo {
+  margin-right: 30px;
+  flex-grow: 1;
+  flex-basis: 0;
+  align-items: center;
+}
+
+.feed-page-user-photo > img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #ccc;
+}
+
+.feed-page-user-content {
+  flex-grow: 2;
+  flex-basis: 30px;
+}
+
+.feed-page-user-inform {
+  flex-direction: row;
+  margin: 5px 0 25px;
+}
+
+.feed-page-user-inform > h1 {
+  font-size: 28px;
+  line-height: 30px;
+  font-weight: 300;
+}
+
+.feed-page-btns {
+  flex-direction: row;
+}
+
+.feed-page-profile-setting {
+  padding: 0 9px;
+  border: 1px solid #dbdbdb;
+  border-radius: 4px;
+  color: #262626;
+  flex: 0 1 auto;
+  font-weight: 500;
+}
+
+.feed-page-user-setting {
+  margin-left: 4px;
+  width: 40px;
+}
+
+.feed-page-user-setting > img {
+  width: 24px;
+  height: 24px;
+}
+
+.feed-page-add {
+  margin-left: 4px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.feed-page-header-ul {
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: row;
+}
+
+.feed-page-header-ul li {
+  margin-right: 40px;
+  font-size: 16px;
+}
+
+.font-weight-600 {
+  font-weight: 600;
+}
+
+.feed-page-thumbnail-img {
+  width: 293px;
+  height: 293px;
+  object-fit: cover;
+  background-color: #ccc;
+  border: 0;
+}
+
+.feed-page-thumbnail-container {
+  flex-grow: 1;
+  flex-direction: column;
+  margin-top: 53px;
+}
+
+.feed-page-thumbnail-row {
+  flex: 1 0 0%;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.feed-page-thumbnail-row > a:not(:nth-child(3n)) {
+  margin-right: 28px;
+}
+
+.feed-page-thumbnail-row > a {
+  border: 0;
+  margin-bottom: 28px;
+}
+
+.feed-page-thumbnail-row > a > img {
+  width: 293px;
+  height: 293px;
+  object-fit: cover;
+  background-color: #ccc;
+  border: 0;
+}
+
+.feed-page-thumbnail-row > button:not(:nth-child(3n)) {
+  margin-right: 28px;
+}
+
+.feed-page-thumbnail-row > button {
+  padding: 0;
+  border: 0;
+  margin-bottom: 28px;
+}
+
+.feed-page-thumbnail-row > button > img {
+  width: 293px;
+  height: 293px;
+  object-fit: cover;
+  /* background-color: #ccc; */
+  border: 0;
+}
+
+.feed-page-thumbnail-hover {
+  opacity: 0;
+  position: absolute;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 293px;
+  height: 293px;
+}
+
+.feed-page-thumbnail-hover:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.feed-page-thumbnail-hover > svg {
+  font-size: 19px;
+  color: white;
+  margin-right: 7px;
+}
+
+.feed-page-thumbnail-hover > h2 {
+  font-size: 19px;
+  color: white;
+}
+
+.feed-page-thumbnail-hover > h2:not(:last-child) {
+  margin-right: 30px;
+}
+
+.margin-l-20 {
+  margin-left: 20px;
+}
