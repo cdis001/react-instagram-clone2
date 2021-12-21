@@ -87,6 +87,14 @@
   font-weight: 600;
 }
 
+.feed-page-thumbnail-img {
+  width: 293px;
+  height: 293px;
+  object-fit: cover;
+  background-color: #ccc;
+  border: 0;
+}
+
 .feed-page-thumbnail-container {
   flex-grow: 1;
   flex-direction: column;

@@ -1,12 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
+import { faCog, faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Header from "../Header";
+import FeedThumbnail from "../FeedThumbnail";
+import feedsData from "../Home/feedsData.json";
 import "../../resources/button.css";
 import "./userPage.css";
+
+const FeedThumbnails = ({ feeds }) => {
+  return (
+    <div className={"feed-page-thumbnail-row"}>
+      {feeds.map((feed) => {
+        const likeCount = feed.likes.length;
+        const commentCount = feed.comments.length;
+        // console.log(feed);
+        return (
+          <Link
+            to={{ pathname: `/p/${feed.id}`, state: { feed } }}
+            key={feed.id}
+          >
+            <div className={"feed-page-thumbnail-hover"}>
+              <FontAwesomeIcon icon={faHeart} />
+              <h2>{likeCount}</h2>
+              <FontAwesomeIcon icon={faComment} />
+              <h2>{commentCount}</h2>
+            </div>
+            <img src={feed.files[0].src} />
+          </Link>
+        );
+      })}
+    </div>
+  );
+};
 
 const UserPageBtns = () => {
   return (
@@ -75,7 +103,7 @@ const UserPage = () => {
           </div>
         </header>
         <div className={"feed-page-thumbnail-container"}>
-          {/* <FeedThumbnails feeds={feeds} /> */}
+          <FeedThumbnails feeds={feedsData} />
         </div>
       </div>
     </section>
