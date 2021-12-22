@@ -29,6 +29,10 @@ const Home = () => {
 
   const dispatch = useDispatch();
   // const feeds = useSelector((state) => state.feeds);
+  const isLogin = useSelector((state) => state.isLogin);
+  const token = useSelector((state) => state.token);
+  console.log(isLogin);
+  console.log(token);
   const feeds = feedsData;
 
   const [windowWidth, windowHeight] = useWindowSize();
@@ -37,17 +41,14 @@ const Home = () => {
     const htmlTitle = document.querySelector("title");
     htmlTitle.innerHTML = "Instagram";
 
-    // const token = localStorage.getItem("accountName") || "";
-    // // console.log(token);
-
-    const { status } = await dispatch(getFeeds());
-    if (status !== 200) {
-      alert("불러오기 실패");
-    }
-
-    // if (token.length <= 0) {
-    //   history.push("/accounts/login");
+    // const { status } = await dispatch(getFeeds());
+    // if (status !== 200) {
+    //   alert("불러오기 실패");
     // }
+
+    if (!isLogin) {
+      history.push("/accounts/login");
+    }
     // if (isNewbie) {
     //   history.push("/explore/people/suggested");
     // }

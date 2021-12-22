@@ -17,25 +17,23 @@ const LoginForm = () => {
   let history = useHistory();
   const dispatch = useDispatch();
 
-  const signinBtn = (e) => {
+  const signinBtn = async (e) => {
     e.preventDefault();
     let userData = { accountName, password };
 
-    dispatch(loginRequest(userData)).then((res) => {
-      const { payload } = res;
-      // console.log(res.payload);
+    const loginData = await dispatch(loginRequest(userData));
+    // console.log(loginData);
+    const { status } = loginData;
 
-      if (payload.status === 201) {
-        console.log("login!");
-        history.push("/");
-      } else if (payload.status === 401) {
-        setValidContent(
-          "입력한 사용자 이름을 사용하는 계정을 찾을 수 없습니다. 사용자 이름을 확인하고 다시 시도하세요."
-        );
-      } else {
-        setValidContent("로그인에 실패했습니다.");
-      }
-    });
+    if (status === 201) {
+      history.push("/");
+    } else if (status === 401) {
+      setValidContent(
+        "입력한 사용자 이름을 사용하는 계정을 찾을 수 없습니다. 사용자 이름을 확인하고 다시 시도하세요."
+      );
+    } else {
+      setValidContent("로그인에 실패했습니다.");
+    }
   };
 
   const onKeyPress = (e) => {
