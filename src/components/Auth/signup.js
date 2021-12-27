@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { GrFacebook } from "react-icons/gr";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./index.css";
 import "../../resources/button.css";
@@ -40,13 +40,19 @@ const SignUpForm = () => {
   const [password, setPassword] = useState("");
   const [validContent, setValidContent] = useState("");
 
+  let history = useHistory();
+  const dispatch = useDispatch();
+
+  const isLogin = useSelector((state) => state.isLogin);
+
   useEffect(() => {
     const htmlTitle = document.querySelector("title");
     htmlTitle.innerHTML = "가입하기";
-  }, []);
 
-  const dispatch = useDispatch();
-  let history = useHistory();
+    if (isLogin) {
+      history.push("/");
+    }
+  }, []);
 
   const signUpBtn = (e) => {
     e.preventDefault();

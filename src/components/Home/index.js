@@ -31,8 +31,8 @@ const Home = () => {
   // const feeds = useSelector((state) => state.feeds);
   const isLogin = useSelector((state) => state.isLogin);
   const token = useSelector((state) => state.token);
-  console.log(isLogin);
-  console.log(token);
+  // console.log(isLogin);
+  // console.log(token);
   const feeds = feedsData;
 
   const [windowWidth, windowHeight] = useWindowSize();

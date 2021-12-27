@@ -7,16 +7,14 @@ import {
   faUserCircle,
 } from "@fortawesome/free-regular-svg-icons";
 import * as solid from "@fortawesome/free-solid-svg-icons";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./header.css";
 import "../../resources/button.css";
 import Logo from "../../resources/images/title_logo.png";
+import { logout } from "../../redux/actions";
 
 import LIKED_BOARD_DATA from "./LikedBoardContent.json";
-
-const _logout = () => {
-  localStorage.setItem("accountName", "");
-};
 
 const LikedBoard = ({ isLikedBoardContent, data }) => {
   // console.log(data);
@@ -82,12 +80,18 @@ const Header = ({ mode = "default" }) => {
   const searchInput = useRef();
   const location = useLocation();
   let history = useHistory();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setPathname(location.pathname);
 
     setUserName("userName01");
   }, []);
+
+  const _logout = async () => {
+    await dispatch(logout());
+    history.push("/accounts/login");
+  };
 
   const HeaderContent = () => {
     return (
@@ -272,9 +276,12 @@ const Header = ({ mode = "default" }) => {
                       <span>설정</span>
                     </Link>
                     <hr className={"menu-hr"} />
-                    <div className={"user-menu-a " + "margin-b-4 "}>
+                    <button
+                      className={"user-menu-a " + "margin-b-4 "}
+                      onClick={_logout}
+                    >
                       <span>로그아웃</span>
-                    </div>
+                    </button>
                   </div>
                 </div>
               ) : null}

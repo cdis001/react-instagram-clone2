@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GrFacebook } from "react-icons/gr";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./index.css";
 import "../../resources/button.css";
@@ -10,16 +10,27 @@ import InputForm from "../InputForm";
 import { loginRequest } from "../../redux/actions";
 
 const LoginForm = () => {
-  const [accountName, setAccountName] = useState("");
+  const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const [validContent, setValidContent] = useState("");
 
   let history = useHistory();
   const dispatch = useDispatch();
 
+  const isLogin = useSelector((state) => state.isLogin);
+
+  useEffect(() => {
+    const htmlTitle = document.querySelector("title");
+    htmlTitle.innerHTML = "로그인 • Instagram";
+
+    if (isLogin) {
+      history.push("/");
+    }
+  }, []);
+
   const signinBtn = async (e) => {
     e.preventDefault();
-    let userData = { accountName, password };
+    let userData = { userId, password };
 
     const loginData = await dispatch(loginRequest(userData));
     // console.log(loginData);
@@ -27,7 +38,7 @@ const LoginForm = () => {
 
     if (status === 201) {
       history.push("/");
-    } else if (status === 401) {
+    } else if (status === 401 || status === 400) {
       setValidContent(
         "입력한 사용자 이름을 사용하는 계정을 찾을 수 없습니다. 사용자 이름을 확인하고 다시 시도하세요."
       );
@@ -39,7 +50,7 @@ const LoginForm = () => {
   const onKeyPress = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      if (accountName.length > 0) signinBtn(e);
+      if (userId.length > 0) signinBtn(e);
     }
   };
 
@@ -53,10 +64,10 @@ const LoginForm = () => {
               type="text"
               placeholder="전화번호, 사용자 이름 또는 이메일"
               onChange={(e) => {
-                setAccountName(e.target.value);
+                setUserId(e.target.value);
               }}
               name="username"
-              value={accountName}
+              value={userId}
               onKeyPress={onKeyPress}
             />
             <InputForm
@@ -73,9 +84,7 @@ const LoginForm = () => {
             <button
               type="submit"
               className="signin-btn"
-              disabled={
-                accountName.length > 0 && password.length > 5 ? false : true
-              }
+              disabled={userId.length > 0 && password.length > 5 ? false : true}
               onClick={signinBtn}
             >
               로그인
