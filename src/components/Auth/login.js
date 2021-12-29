@@ -26,7 +26,7 @@ const LoginForm = () => {
     if (isLogin) {
       history.push("/");
     }
-  }, []);
+  }, [isLogin]);
 
   const signinBtn = async (e) => {
     e.preventDefault();

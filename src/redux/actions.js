@@ -18,23 +18,20 @@ export const emailSignup = (userData) => {
 
 export const loginRequest = async (userData) => {
   return async (dispatch) => {
-    const data = await axios.post(DOMAIN + "/api/auth/login", userData);
-
-    // console.log(data);
-    const { status } = data;
-
-    if (status === 201) {
+    try {
+      const data = await axios.post(DOMAIN + "/api/auth/login", userData);
+      // console.log(data);
+      const { status } = data;
       const { accessToken } = data.data;
       if (accessToken) {
         dispatch(await saveToken(accessToken));
       }
-
       return { accessToken, status };
-    } else {
-      return { status };
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
     }
-
-    // return { type: SAVE_TOKEN, payload: data };
   };
 };
 
