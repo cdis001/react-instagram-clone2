@@ -54,25 +54,25 @@ const SignUpForm = () => {
     }
   }, []);
 
-  const signUpBtn = (e) => {
+  const signUpBtn = async (e) => {
     e.preventDefault();
     setValidContent(``);
 
     let userData = { userName, accountName, password, email };
-    dispatch(emailSignup(userData)).then((res) => {
-      console.log(res);
-      const { payload } = res;
+    const signupData = await dispatch(emailSignup(userData));
 
-      if (payload.status === 200 || payload.status === 201) {
-        alert(`${userName}님, instagram에 오신것을 환영합니다!`);
-        history.push("/accounts/login");
-      } else {
-        const errorMessage = payload.data.message;
-        if (!isId(userName)) {
-          setValidContent(errorMessage);
-        }
+    console.log(signupData);
+    const { status } = signupData;
+
+    if (status === 200 || status === 201) {
+      alert(`${userName}님, instagram에 오신것을 환영합니다!`);
+      history.push("/accounts/login");
+    } else {
+      const errorMessage = signupData.message;
+      if (!isId(userName)) {
+        setValidContent(errorMessage);
       }
-    });
+    }
   };
 
   const onKeyPress = (e) => {

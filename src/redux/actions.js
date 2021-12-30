@@ -7,13 +7,20 @@ const DOMAIN = "http://localhost:4000";
 
 const getToken = async () => await localStorage.getItem("token");
 
-export const emailSignup = (userData) => {
-  const data = axios.post(DOMAIN + "/api/auth/register", userData).then(
-    (res) => res,
-    (error) => error.response
-  );
+export const emailSignup = async (userData) => {
+  return async (dispatch) => {
+    try {
+      const data = await axios.post(DOMAIN + "/api/auth/register", userData);
 
-  return { type: EMAIL_SIGNUP, payload: data };
+      const { status } = data;
+
+      return { type: EMAIL_SIGNUP, status };
+    } catch (err) {
+      const errorMessage = err.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
 };
 
 export const loginRequest = async (userData) => {
