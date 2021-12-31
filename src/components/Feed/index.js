@@ -188,7 +188,7 @@ const Feed = ({
   const { userName } = user;
   const feedContents = contents;
   const feedLocation = location;
-  const feedImg = files[0].src;
+  const feedImg = files[0];
   const feedComments = comments;
   const commentCnt = comments.length;
   const likeCnt = likes.length;
@@ -228,8 +228,8 @@ const Feed = ({
       <div className={`${isDetail ? "detail-feed-photo-div" : ""}`}>
         <img
           className={`feed-photo ${isDetail ? " detail-feed-photo" : ""}`}
-          src={feedImg}
-          // src={`http://www.astronomer.rocks/news/photo/201802/82361_623_1441.jpeg`}
+          // src={feedImg}
+          src={`http://www.astronomer.rocks/news/photo/201802/82361_623_1441.jpeg`}
           sizes={"614px"}
           alt={"feedImg"}
         />

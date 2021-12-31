@@ -1,42 +1,83 @@
 import axios from "axios";
 
-import { EMAIL_SIGNUP, ACCOUNT_LOGIN, SET_FEEDS } from "./types";
+import { EMAIL_SIGNUP, SAVE_TOKEN, LOGOUT, SET_FEEDS } from "./types";
 
 const DOMAIN = "http://localhost:4000";
 // axios.defaults.withCredentials = true;
 
-export const emailSignup = (userData) => {
-  const data = axios.post(DOMAIN + "/api/auth/register", userData).then(
-    (res) => res,
-    (error) => error.response
-  );
+const getToken = async () => await localStorage.getItem("token");
 
-  return { type: EMAIL_SIGNUP, payload: data };
+export const emailSignup = async (userData) => {
+  return async (dispatch) => {
+    try {
+      const data = await axios.post(DOMAIN + "/api/auth/register", userData);
+
+      const { status } = data;
+
+      return { type: EMAIL_SIGNUP, status };
+    } catch (err) {
+      const errorMessage = err.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
 };
 
-export const loginRequest = (userData) => {
-  const data = axios.post(DOMAIN + "/api/auth/login", userData).then(
-    (res) => res,
-    (error) => error.response
-  );
-  return { type: ACCOUNT_LOGIN, payload: data };
+export const loginRequest = async (userData) => {
+  return async (dispatch) => {
+    try {
+      const data = await axios.post(DOMAIN + "/api/auth/login", userData);
+      // console.log(data);
+      const { status } = data;
+      const { accessToken } = data.data;
+      if (accessToken) {
+        dispatch(await saveToken(accessToken));
+      }
+      return { accessToken, status };
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
 };
 
 export const getFeeds = async () => {
   return async (dispatch) => {
-    const result = await axios.get(DOMAIN + "/api/feeds");
+    try {
+      const result = await axios.get(DOMAIN + "/api/feeds");
+      const { status, data } = result;
 
-    const { status, data } = result;
-    if (status === 200) {
-      dispatch(setFeeds(data));
+      if (status === 200) {
+        return { status, feeds: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
     }
-    return { status };
   };
 };
 
-const setFeeds = (feeds) => {
+const saveToken = async (token) => {
+  await localStorage.setItem("token", token);
+
   return {
-    type: SET_FEEDS,
-    feeds,
+    type: SAVE_TOKEN,
+    token,
   };
 };
+
+export const logout = async () => {
+  await localStorage.setItem("token", "");
+  return {
+    type: LOGOUT,
+  };
+};
+
+// const setFeeds = (feeds) => {
+//   return {
+//     type: SET_FEEDS,
+//     feeds,
+//   };
+// };

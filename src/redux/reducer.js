@@ -1,4 +1,4 @@
-import { ACCOUNT_LOGIN, EMAIL_SIGNUP, SET_FEEDS } from "./types";
+import { SAVE_TOKEN, LOGOUT, EMAIL_SIGNUP, SET_FEEDS } from "./types";
 
 const initialState = {
   token: "",
@@ -11,8 +11,15 @@ const reducer = (state = initialState, action) => {
     case EMAIL_SIGNUP:
       return { ...state, result: action.payload };
 
-    case ACCOUNT_LOGIN:
-      return { ...state, result: action.payload };
+    case SAVE_TOKEN:
+      const { token } = action;
+      return { ...state, isLogin: true, token };
+
+    case LOGOUT:
+      return {
+        token: "",
+        isLogin: false,
+      };
 
     case SET_FEEDS:
       const { feeds } = action;

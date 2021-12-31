@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { GrFacebook } from "react-icons/gr";
 import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./index.css";
 import "../../resources/button.css";
@@ -40,33 +40,39 @@ const SignUpForm = () => {
   const [password, setPassword] = useState("");
   const [validContent, setValidContent] = useState("");
 
+  let history = useHistory();
+  const dispatch = useDispatch();
+
+  const isLogin = useSelector((state) => state.isLogin);
+
   useEffect(() => {
     const htmlTitle = document.querySelector("title");
     htmlTitle.innerHTML = "가입하기";
+
+    if (isLogin) {
+      history.push("/");
+    }
   }, []);
 
-  const dispatch = useDispatch();
-  let history = useHistory();
-
-  const signUpBtn = (e) => {
+  const signUpBtn = async (e) => {
     e.preventDefault();
     setValidContent(``);
 
     let userData = { userName, accountName, password, email };
-    dispatch(emailSignup(userData)).then((res) => {
-      console.log(res);
-      const { payload } = res;
+    const signupData = await dispatch(emailSignup(userData));
 
-      if (payload.status === 200 || payload.status === 201) {
-        alert(`${userName}님, instagram에 오신것을 환영합니다!`);
-        history.push("/accounts/login");
-      } else {
-        const errorMessage = payload.data.message;
-        if (!isId(userName)) {
-          setValidContent(errorMessage);
-        }
+    console.log(signupData);
+    const { status } = signupData;
+
+    if (status === 200 || status === 201) {
+      alert(`${userName}님, instagram에 오신것을 환영합니다!`);
+      history.push("/accounts/login");
+    } else {
+      const errorMessage = signupData.message;
+      if (!isId(userName)) {
+        setValidContent(errorMessage);
       }
-    });
+    }
   };
 
   const onKeyPress = (e) => {
