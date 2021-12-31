@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getFeeds } from "../../redux/actions";
 import Feed from "../Feed";
 import Header from "../Header";
-import feedsData from "./feedsData.json";
+// import feedsData from "./feedsData.json";
 import "./home.css";
 import "../../resources/button.css";
 
@@ -24,16 +24,16 @@ const useWindowSize = () => {
 
 const Home = () => {
   const [isNewbie, setIsNewbie] = useState(false);
+  const [feedsData, setFeedsData] = useState([]);
 
   let history = useHistory();
 
   const dispatch = useDispatch();
-  // const feeds = useSelector((state) => state.feeds);
   const isLogin = useSelector((state) => state.isLogin);
   const token = useSelector((state) => state.token);
   // console.log(isLogin);
   // console.log(token);
-  const feeds = feedsData;
+  // const feeds = feedsData;
 
   const [windowWidth, windowHeight] = useWindowSize();
 
@@ -41,10 +41,12 @@ const Home = () => {
     const htmlTitle = document.querySelector("title");
     htmlTitle.innerHTML = "Instagram";
 
-    // const { status } = await dispatch(getFeeds());
-    // if (status !== 200) {
-    //   alert("불러오기 실패");
-    // }
+    const { feeds, status } = await dispatch(getFeeds());
+
+    setFeedsData(feeds);
+    if (status !== 200) {
+      alert("불러오기 실패");
+    }
 
     if (!isLogin) {
       history.push("/accounts/login");
@@ -59,7 +61,7 @@ const Home = () => {
       <Header />
       <div className={"home-content-container "}>
         <div className={"home-content-left "}>
-          {feeds.map((feed) => (
+          {feedsData.map((feed) => (
             <Feed key={feed.id} {...feed} />
           ))}
         </div>

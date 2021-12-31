@@ -44,13 +44,18 @@ export const loginRequest = async (userData) => {
 
 export const getFeeds = async () => {
   return async (dispatch) => {
-    const result = await axios.get(DOMAIN + "/api/feeds");
+    try {
+      const result = await axios.get(DOMAIN + "/api/feeds");
+      const { status, data } = result;
 
-    const { status, data } = result;
-    if (status === 200) {
-      dispatch(setFeeds(data));
+      if (status === 200) {
+        return { status, feeds: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
     }
-    return { status };
   };
 };
 
@@ -70,9 +75,9 @@ export const logout = async () => {
   };
 };
 
-const setFeeds = (feeds) => {
-  return {
-    type: SET_FEEDS,
-    feeds,
-  };
-};
+// const setFeeds = (feeds) => {
+//   return {
+//     type: SET_FEEDS,
+//     feeds,
+//   };
+// };
