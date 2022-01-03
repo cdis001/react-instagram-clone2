@@ -59,6 +59,44 @@ export const getFeeds = async () => {
   };
 };
 
+export const validationEmail = async (email) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.get(
+        DOMAIN + "/api/auth/emailValidation/" + email
+      );
+      const { status, data } = result;
+
+      if (status === 200) {
+        return { status, result: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const validationAccountName = async (accountName) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.get(
+        DOMAIN + "/api/auth/accountNameValidation/" + accountName
+      );
+      const { status, data } = result;
+
+      if (status === 200) {
+        return { status, result: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
 const saveToken = async (token) => {
   await localStorage.setItem("token", token);
 

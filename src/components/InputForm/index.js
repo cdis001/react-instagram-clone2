@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
-  faTimesCircle
+  faTimesCircle,
 } from "@fortawesome/free-regular-svg-icons";
 
 import "./index.css";
@@ -45,11 +45,11 @@ const InputForm = ({
             setIsFocus(!isFocus);
             setIsSignup(false);
           }}
-          onBlur={() => {
+          onBlur={async () => {
             setIsFocus(!isFocus);
             if (valueCheck !== undefined) {
               setIsSignup(true);
-              setIsChecked(valueCheck(value));
+              setIsChecked(await valueCheck(value));
             }
           }}
           onKeyPress={onKeyPress}
@@ -65,9 +65,15 @@ const InputForm = ({
         //   className="input-mark "
         // />
         isChecked ? (
-          <FontAwesomeIcon icon={faCheckCircle} className={"check-icon-size " + "color-gray " + "input-mark "} />
+          <FontAwesomeIcon
+            icon={faCheckCircle}
+            className={"check-icon-size " + "color-gray " + "input-mark "}
+          />
         ) : (
-          <FontAwesomeIcon icon={faTimesCircle} className={"check-icon-size " + "color-red " + "input-mark "} />
+          <FontAwesomeIcon
+            icon={faTimesCircle}
+            className={"check-icon-size " + "color-red " + "input-mark "}
+          />
         )
       ) : null}
 
