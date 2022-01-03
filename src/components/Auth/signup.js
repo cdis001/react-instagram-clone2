@@ -7,31 +7,12 @@ import "./index.css";
 import "../../resources/button.css";
 import title_logo from "../../resources/images/title_logo.png";
 import InputForm from "../InputForm";
-import { emailSignup } from "../../redux/actions";
+import {
+  emailSignup,
+  validationEmail,
+  validationAccountName,
+} from "../../redux/actions";
 // import {history} from "../../redux/store"
-
-const isId = (text) => {
-  const emailRegex =
-    /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-  const phoneRegex = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
-
-  return emailRegex.test(text) || phoneRegex.test(text);
-};
-
-const isUserName = (text) => {
-  // 사용자 이름. 중복 상관 x
-  return true;
-};
-
-const isNickName = (text) => {
-  // 사용자 닉네임(표시되는 아이디). 중복 검사 실행
-  return true;
-};
-
-const isPassword = (text) => {
-  //비밀번호 조건
-  return true;
-};
 
 const SignUpForm = () => {
   const [email, setEmail] = useState("");
@@ -80,6 +61,37 @@ const SignUpForm = () => {
       e.preventDefault();
       if (accountName.length > 0) signUpBtn(e);
     }
+  };
+  const isId = async (text) => {
+    const emailRegex =
+      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+    // const phoneRegex = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
+
+    if (emailRegex.test(text)) {
+      const { result } = await dispatch(validationEmail(email));
+      // console.log(result);
+
+      return result.code;
+    }
+    return false;
+  };
+
+  const isNickName = async (text) => {
+    // 사용자 닉네임(표시되는 아이디). 중복 검사 실행
+    const { result } = await dispatch(validationAccountName(accountName));
+    console.log(result);
+
+    return result.code;
+  };
+
+  const isUserName = (text) => {
+    // 사용자 이름. 중복 상관 x
+    return true;
+  };
+
+  const isPassword = (text) => {
+    //비밀번호 조건
+    return true;
   };
 
   return (
