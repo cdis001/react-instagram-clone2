@@ -8,6 +8,7 @@ import Header from "../Header";
 // import feedsData from "./feedsData.json";
 import "./home.css";
 import "../../resources/button.css";
+import FollowButton from "../FollowButton";
 
 const useWindowSize = () => {
   const [size, setSize] = useState([0, 0]);
@@ -99,9 +100,7 @@ const Home = () => {
                   </Link>
                   <span className={"recommend-user-content "}>content</span>
                 </div>
-                <button className={"white-blue-btn " + "user-follow-btn "}>
-                  팔로우
-                </button>
+                <FollowButton followingId="2" />
               </div>
             </div>
           </div>
