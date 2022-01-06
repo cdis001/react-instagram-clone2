@@ -1,4 +1,10 @@
-import { SAVE_TOKEN, LOGOUT, EMAIL_SIGNUP, SET_FEEDS } from "./types";
+import {
+  SAVE_TOKEN,
+  LOGOUT,
+  EMAIL_SIGNUP,
+  SET_FOLLOW,
+  REMOVE_FOLLOW,
+} from "./types";
 
 const initialState = {
   token: "",
@@ -21,6 +27,36 @@ const reducer = (state = initialState, action) => {
       return {
         token: "",
         isLogin: false,
+      };
+
+    case SET_FOLLOW:
+      const { follower, following } = action;
+      // console.log(follower, following);
+
+      const setFollower = state.userFollows.concat(follower);
+      const setFollowing = state.userFollowing.concat(following);
+
+      return {
+        ...state,
+        userFollows: setFollower,
+        userFollowing: setFollowing,
+      };
+
+    case REMOVE_FOLLOW:
+      const { followerId, followingId } = action;
+      console.log(followingId);
+
+      const removeFollower = state.userFollows.filter(
+        (data) => data.id != followerId
+      );
+      const removeFollowing = state.userFollowing.filter(
+        (data) => data.id != followingId
+      );
+
+      return {
+        ...state,
+        userFollows: removeFollower,
+        userFollowing: removeFollowing,
       };
 
     default:

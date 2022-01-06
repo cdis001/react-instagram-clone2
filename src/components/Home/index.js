@@ -100,7 +100,7 @@ const Home = () => {
                   </Link>
                   <span className={"recommend-user-content "}>content</span>
                 </div>
-                <FollowButton followingId="2" />
+                <FollowButton followingId="2" isFollowed={true} />
               </div>
             </div>
           </div>

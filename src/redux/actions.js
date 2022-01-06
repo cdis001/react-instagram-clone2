@@ -1,6 +1,12 @@
 import axios from "axios";
 
-import { EMAIL_SIGNUP, SAVE_TOKEN, LOGOUT, SET_FEEDS } from "./types";
+import {
+  EMAIL_SIGNUP,
+  SAVE_TOKEN,
+  LOGOUT,
+  SET_FOLLOW,
+  REMOVE_FOLLOW,
+} from "./types";
 
 const DOMAIN = "http://localhost:4000";
 axios.defaults.withCredentials = true;
@@ -122,14 +128,46 @@ export const addFollow = async (followData) => {
         }
       );
       const { status, data } = result;
-      console.log(result);
+      // console.log(result);
+      const { follower, following } = data;
 
       if (status === 200 || status === 201) {
+        dispatch(await setFollow(follower, following));
         return { status };
       }
     } catch (e) {
       const errorMessage = e.response.data;
       const { statusCode, message } = errorMessage;
+      // console.log(errorMessage);
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const deleteFollow = async (followData) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.delete(
+        "/api/follows",
+        { data: followData },
+        {
+          headers: await getHeader(),
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      const { status, data } = result;
+      const { followerId, followingId, id } = data;
+
+      if (status === 200 || status === 201) {
+        dispatch(await removeFollow(followerId, followingId));
+        return { status };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      // console.log(errorMessage);
       return { status: statusCode, message };
     }
   };
@@ -152,9 +190,18 @@ export const logout = async () => {
   };
 };
 
-// const setFeeds = (feeds) => {
-//   return {
-//     type: SET_FEEDS,
-//     feeds,
-//   };
-// };
+const setFollow = (follower, following) => {
+  return {
+    type: SET_FOLLOW,
+    follower,
+    following,
+  };
+};
+
+const removeFollow = (followerId, followingId) => {
+  return {
+    type: REMOVE_FOLLOW,
+    followerId,
+    followingId,
+  };
+};
