@@ -31,7 +31,7 @@ const Home = () => {
 
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.isLogin);
-  const token = useSelector((state) => state.token);
+  // const token = useSelector((state) => state.token);
   // console.log(isLogin);
   // console.log(token);
   // const feeds = feedsData;

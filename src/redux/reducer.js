@@ -27,6 +27,9 @@ const reducer = (state = initialState, action) => {
       return {
         token: "",
         isLogin: false,
+        userId: "",
+        userFollows: [],
+        userFollowing: [],
       };
 
     case SET_FOLLOW:

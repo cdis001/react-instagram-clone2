@@ -8,7 +8,6 @@ import {
   REMOVE_FOLLOW,
 } from "./types";
 
-const DOMAIN = "http://localhost:4000";
 axios.defaults.withCredentials = true;
 
 const getToken = async () => await localStorage.getItem("token");
@@ -25,7 +24,7 @@ const getHeader = async () => {
 export const emailSignup = async (userData) => {
   return async (dispatch) => {
     try {
-      const data = await axios.post(DOMAIN + "/api/auth/register", userData);
+      const data = await axios.post("/api/auth/register", userData);
 
       const { status } = data;
 
@@ -41,17 +40,21 @@ export const emailSignup = async (userData) => {
 export const loginRequest = async (userData) => {
   return async (dispatch) => {
     try {
-      const data = await axios.post(DOMAIN + "/api/auth/login", userData, {
+      const loginData = await axios.post("/api/auth/login", userData, {
         withCreadentials: true,
       });
-      // console.log(data);
-      const { status } = data;
-      const { id, accessToken } = data.data;
+      // console.log(loginData);
+      const { status, data } = loginData;
+      const { id, accessToken, follower, following } = data;
       if (accessToken) {
         dispatch(await saveToken(id, accessToken));
       }
+      if (follower.length > 0 || following.length > 0) {
+        dispatch(await setFollow(follower, following));
+      }
       return { accessToken, status };
     } catch (e) {
+      // console.log(e.response);
       const errorMessage = e.response.data;
       const { statusCode, message } = errorMessage;
       return { status: statusCode, message };
@@ -79,9 +82,7 @@ export const getFeeds = async () => {
 export const validationEmail = async (email) => {
   return async (dispatch) => {
     try {
-      const result = await axios.get(
-        DOMAIN + "/api/auth/emailValidation/" + email
-      );
+      const result = await axios.get("/api/auth/emailValidation/" + email);
       const { status, data } = result;
 
       if (status === 200) {
@@ -99,7 +100,7 @@ export const validationAccountName = async (accountName) => {
   return async (dispatch) => {
     try {
       const result = await axios.get(
-        DOMAIN + "/api/auth/accountNameValidation/" + accountName
+        "/api/auth/accountNameValidation/" + accountName
       );
       const { status, data } = result;
 
