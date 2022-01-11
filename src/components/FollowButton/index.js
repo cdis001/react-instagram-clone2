@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { addFollow, deleteFollow } from "../../redux/actions";
+import MenuBox from "../MenuBox";
 import "../../resources/button.css";
 
 const FollowButton = ({ followingId, isFollowed, type }) => {
   const [isFollowing, setIsFollowing] = useState(isFollowed);
+  const [isUnFollowingOn, setIsUnFollowingOn] = useState(false);
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userId);
 
@@ -38,15 +40,36 @@ const FollowButton = ({ followingId, isFollowed, type }) => {
       setIsFollowing(false);
     }
   };
+  const menus = [
+    {
+      id: 1,
+      title: `팔로우를 취소하시겠어요?`,
+      buttonStyle: "menu-title",
+    },
+    {
+      id: 2,
+      title: "팔로우 취소",
+      onClick: onUnFollowButton,
+      buttonStyle: "menu-red-b",
+    },
+    {
+      id: 3,
+      title: "취소",
+      onClick: () => setIsUnFollowingOn(false),
+    },
+  ];
 
   if (isFollowing) {
     return (
-      <button
-        onClick={onUnFollowButton}
-        className={"white-black-btn " + "user-follow-btn "}
-      >
-        팔로잉
-      </button>
+      <div>
+        {isUnFollowingOn ? <MenuBox menus={menus} /> : null}
+        <button
+          onClick={() => setIsUnFollowingOn(!isUnFollowingOn)}
+          className={"white-black-btn " + "user-follow-btn "}
+        >
+          팔로잉
+        </button>
+      </div>
     );
   } else {
     return (

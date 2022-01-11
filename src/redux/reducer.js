@@ -3,7 +3,8 @@ import {
   LOGOUT,
   EMAIL_SIGNUP,
   SET_FOLLOW,
-  REMOVE_FOLLOW,
+  SET_FOLLOWING,
+  REMOVE_FOLLOWING,
 } from "./types";
 
 const initialState = {
@@ -32,6 +33,16 @@ const reducer = (state = initialState, action) => {
         userFollowing: [],
       };
 
+    case SET_FOLLOWING:
+      const { newFollowing } = action;
+
+      const setNewFollowing = state.userFollowing.concat(newFollowing);
+
+      return {
+        ...state,
+        userFollowing: setNewFollowing,
+      };
+
     case SET_FOLLOW:
       const { follower, following } = action;
       // console.log(follower, following);
@@ -45,20 +56,15 @@ const reducer = (state = initialState, action) => {
         userFollowing: setFollowing,
       };
 
-    case REMOVE_FOLLOW:
-      const { followerId, followingId } = action;
-      console.log(followingId);
+    case REMOVE_FOLLOWING:
+      const { removeFollowingId } = action;
 
-      const removeFollower = state.userFollows.filter(
-        (data) => data.id != followerId
-      );
       const removeFollowing = state.userFollowing.filter(
-        (data) => data.id != followingId
+        (data) => data.id != removeFollowingId
       );
 
       return {
         ...state,
-        userFollows: removeFollower,
         userFollowing: removeFollowing,
       };
 

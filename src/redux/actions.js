@@ -5,7 +5,8 @@ import {
   SAVE_TOKEN,
   LOGOUT,
   SET_FOLLOW,
-  REMOVE_FOLLOW,
+  SET_FOLLOWING,
+  REMOVE_FOLLOWING,
 } from "./types";
 
 axios.defaults.withCredentials = true;
@@ -54,7 +55,7 @@ export const loginRequest = async (userData) => {
       }
       return { accessToken, status };
     } catch (e) {
-      // console.log(e.response);
+      console.log(e.response);
       const errorMessage = e.response.data;
       const { statusCode, message } = errorMessage;
       return { status: statusCode, message };
@@ -130,10 +131,9 @@ export const addFollow = async (followData) => {
       );
       const { status, data } = result;
       // console.log(result);
-      const { follower, following } = data;
 
       if (status === 200 || status === 201) {
-        dispatch(await setFollow(follower, following));
+        dispatch(await setFollowing(data));
         return { status };
       }
     } catch (e) {
@@ -159,10 +159,10 @@ export const deleteFollow = async (followData) => {
         }
       );
       const { status, data } = result;
-      const { followerId, followingId, id } = data;
+      const { id } = data;
 
       if (status === 200 || status === 201) {
-        dispatch(await removeFollow(followerId, followingId));
+        dispatch(await removeFollowing(id));
         return { status };
       }
     } catch (e) {
@@ -191,6 +191,13 @@ export const logout = async () => {
   };
 };
 
+const setFollowing = (newFollowing) => {
+  return {
+    type: SET_FOLLOWING,
+    newFollowing,
+  };
+};
+
 const setFollow = (follower, following) => {
   return {
     type: SET_FOLLOW,
@@ -199,10 +206,9 @@ const setFollow = (follower, following) => {
   };
 };
 
-const removeFollow = (followerId, followingId) => {
+const removeFollowing = (removeFollowingId) => {
   return {
-    type: REMOVE_FOLLOW,
-    followerId,
-    followingId,
+    type: REMOVE_FOLLOWING,
+    removeFollowingId,
   };
 };
