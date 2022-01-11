@@ -8,6 +8,7 @@ import Header from "../Header";
 // import feedsData from "./feedsData.json";
 import "./home.css";
 import "../../resources/button.css";
+import FollowButton from "../FollowButton";
 
 const useWindowSize = () => {
   const [size, setSize] = useState([0, 0]);
@@ -30,9 +31,12 @@ const Home = () => {
 
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.isLogin);
-  const token = useSelector((state) => state.token);
+  // const token = useSelector((state) => state.token);
+  const following = useSelector((state) => state.userFollowing);
   // console.log(isLogin);
   // console.log(token);
+  // console.log("follower", follower);
+  // console.log("following", following);
   // const feeds = feedsData;
 
   const [windowWidth, windowHeight] = useWindowSize();
@@ -55,6 +59,18 @@ const Home = () => {
     //   history.push("/explore/people/suggested");
     // }
   }, []);
+
+  const isFollowed = (userId) => {
+    if (following.length > 0) {
+      const data = following.filter((data) => data.following.id === userId);
+
+      if (data.length > 0) {
+        return true;
+      }
+    }
+
+    return false;
+  };
 
   return (
     <section className={"home-section "}>
@@ -99,9 +115,7 @@ const Home = () => {
                   </Link>
                   <span className={"recommend-user-content "}>content</span>
                 </div>
-                <button className={"white-blue-btn " + "user-follow-btn "}>
-                  팔로우
-                </button>
+                <FollowButton followingId="2" isFollowed={isFollowed(2)} />
               </div>
             </div>
           </div>

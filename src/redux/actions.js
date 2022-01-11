@@ -1,16 +1,31 @@
 import axios from "axios";
 
-import { EMAIL_SIGNUP, SAVE_TOKEN, LOGOUT, SET_FEEDS } from "./types";
+import {
+  EMAIL_SIGNUP,
+  SAVE_TOKEN,
+  LOGOUT,
+  SET_FOLLOW,
+  SET_FOLLOWING,
+  REMOVE_FOLLOWING,
+} from "./types";
 
-const DOMAIN = "http://localhost:4000";
-// axios.defaults.withCredentials = true;
+axios.defaults.withCredentials = true;
 
 const getToken = async () => await localStorage.getItem("token");
+
+const getHeader = async () => {
+  const token = (await getToken()) || "";
+  return {
+    Accept: "application/json; charset=utf-8",
+    "Content-type": "application/json; charset=utf-8",
+    Authorization: `Bearer ${token}`,
+  };
+};
 
 export const emailSignup = async (userData) => {
   return async (dispatch) => {
     try {
-      const data = await axios.post(DOMAIN + "/api/auth/register", userData);
+      const data = await axios.post("/api/auth/register", userData);
 
       const { status } = data;
 
@@ -26,15 +41,21 @@ export const emailSignup = async (userData) => {
 export const loginRequest = async (userData) => {
   return async (dispatch) => {
     try {
-      const data = await axios.post(DOMAIN + "/api/auth/login", userData);
-      // console.log(data);
-      const { status } = data;
-      const { accessToken } = data.data;
+      const loginData = await axios.post("/api/auth/login", userData, {
+        withCreadentials: true,
+      });
+      // console.log(loginData);
+      const { status, data } = loginData;
+      const { id, accessToken, follower, following } = data;
       if (accessToken) {
-        dispatch(await saveToken(accessToken));
+        dispatch(await saveToken(id, accessToken));
+      }
+      if (follower.length > 0 || following.length > 0) {
+        dispatch(await setFollow(follower, following));
       }
       return { accessToken, status };
     } catch (e) {
+      console.log(e.response);
       const errorMessage = e.response.data;
       const { statusCode, message } = errorMessage;
       return { status: statusCode, message };
@@ -45,7 +66,7 @@ export const loginRequest = async (userData) => {
 export const getFeeds = async () => {
   return async (dispatch) => {
     try {
-      const result = await axios.get(DOMAIN + "/api/feeds");
+      const result = await axios.get("/api/feeds");
       const { status, data } = result;
 
       if (status === 200) {
@@ -62,9 +83,7 @@ export const getFeeds = async () => {
 export const validationEmail = async (email) => {
   return async (dispatch) => {
     try {
-      const result = await axios.get(
-        DOMAIN + "/api/auth/emailValidation/" + email
-      );
+      const result = await axios.get("/api/auth/emailValidation/" + email);
       const { status, data } = result;
 
       if (status === 200) {
@@ -82,7 +101,7 @@ export const validationAccountName = async (accountName) => {
   return async (dispatch) => {
     try {
       const result = await axios.get(
-        DOMAIN + "/api/auth/accountNameValidation/" + accountName
+        "/api/auth/accountNameValidation/" + accountName
       );
       const { status, data } = result;
 
@@ -97,12 +116,71 @@ export const validationAccountName = async (accountName) => {
   };
 };
 
-const saveToken = async (token) => {
+export const addFollow = async (followData) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.post(
+        "/api/follows",
+        followData,
+        {
+          headers: await getHeader(),
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      const { status, data } = result;
+      // console.log(result);
+
+      if (status === 200 || status === 201) {
+        dispatch(await setFollowing(data));
+        return { status };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      // console.log(errorMessage);
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const deleteFollow = async (followData) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.delete(
+        "/api/follows",
+        { data: followData },
+        {
+          headers: await getHeader(),
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      const { status, data } = result;
+      const { id } = data;
+
+      if (status === 200 || status === 201) {
+        dispatch(await removeFollowing(id));
+        return { status };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      // console.log(errorMessage);
+      return { status: statusCode, message };
+    }
+  };
+};
+
+const saveToken = async (id, token) => {
   await localStorage.setItem("token", token);
 
   return {
     type: SAVE_TOKEN,
     token,
+    userId: id,
   };
 };
 
@@ -113,9 +191,24 @@ export const logout = async () => {
   };
 };
 
-// const setFeeds = (feeds) => {
-//   return {
-//     type: SET_FEEDS,
-//     feeds,
-//   };
-// };
+const setFollowing = (newFollowing) => {
+  return {
+    type: SET_FOLLOWING,
+    newFollowing,
+  };
+};
+
+const setFollow = (follower, following) => {
+  return {
+    type: SET_FOLLOW,
+    follower,
+    following,
+  };
+};
+
+const removeFollowing = (removeFollowingId) => {
+  return {
+    type: REMOVE_FOLLOWING,
+    removeFollowingId,
+  };
+};
