@@ -55,7 +55,7 @@ export const loginRequest = async (userData) => {
       }
       return { accessToken, status };
     } catch (e) {
-      console.log(e.response);
+      // console.log(e.response);
       const errorMessage = e.response.data;
       const { statusCode, message } = errorMessage;
       return { status: statusCode, message };
@@ -63,13 +63,16 @@ export const loginRequest = async (userData) => {
   };
 };
 
-export const getFeeds = async () => {
+export const getFollowingUserFeeds = async (ids) => {
   return async (dispatch) => {
     try {
-      const result = await axios.get("/api/feeds");
+      const result = await axios.post("/api/feeds/userFeeds", {
+        ids,
+        index: 0,
+      });
       const { status, data } = result;
 
-      if (status === 200) {
+      if (status === 200 || status === 201) {
         return { status, feeds: data };
       }
     } catch (e) {
