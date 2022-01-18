@@ -2,7 +2,7 @@ import axios from "axios";
 
 import {
   EMAIL_SIGNUP,
-  SAVE_TOKEN,
+  SAVE_USER_INFO,
   LOGOUT,
   SET_FOLLOW,
   SET_FOLLOWING,
@@ -46,9 +46,9 @@ export const loginRequest = async (userData) => {
       });
       // console.log(loginData);
       const { status, data } = loginData;
-      const { id, accessToken, follower, following } = data;
+      const { id, accessToken, accountName, follower, following } = data;
       if (accessToken) {
-        dispatch(await saveToken(id, accessToken));
+        dispatch(await saveUserInfo(id, accountName, accessToken));
       }
       if (follower.length > 0 || following.length > 0) {
         dispatch(await setFollow(follower, following));
@@ -56,26 +56,6 @@ export const loginRequest = async (userData) => {
       return { accessToken, status };
     } catch (e) {
       // console.log(e.response);
-      const errorMessage = e.response.data;
-      const { statusCode, message } = errorMessage;
-      return { status: statusCode, message };
-    }
-  };
-};
-
-export const getFollowingUserFeeds = async (ids) => {
-  return async (dispatch) => {
-    try {
-      const result = await axios.post("/api/feeds/userFeeds", {
-        ids,
-        index: 0,
-      });
-      const { status, data } = result;
-
-      if (status === 200 || status === 201) {
-        return { status, feeds: data };
-      }
-    } catch (e) {
       const errorMessage = e.response.data;
       const { statusCode, message } = errorMessage;
       return { status: statusCode, message };
@@ -110,6 +90,45 @@ export const validationAccountName = async (accountName) => {
 
       if (status === 200) {
         return { status, result: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const getFollowingUserFeeds = async (ids, index) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.post("/api/feeds/userFeeds", {
+        ids,
+        index,
+      });
+      const { status, data } = result;
+
+      if (status === 200 || status === 201) {
+        return { status, feeds: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const getOneUserFeeds = async (id, index) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.get(`/api/feeds/user/${id}`, {
+        index,
+      });
+      const { status, data } = result;
+
+      if (status === 200 || status === 201) {
+        return { status, feeds: data };
       }
     } catch (e) {
       const errorMessage = e.response.data;
@@ -177,13 +196,14 @@ export const deleteFollow = async (followData) => {
   };
 };
 
-const saveToken = async (id, token) => {
+const saveUserInfo = async (id, accountName, token) => {
   await localStorage.setItem("token", token);
 
   return {
-    type: SAVE_TOKEN,
+    type: SAVE_USER_INFO,
     token,
     userId: id,
+    userAccountName: accountName,
   };
 };
 

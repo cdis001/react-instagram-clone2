@@ -26,6 +26,7 @@ const useWindowSize = () => {
 const Home = () => {
   const [isNewbie, setIsNewbie] = useState(false);
   const [feedsData, setFeedsData] = useState([]);
+  const [index, setIndex] = useState(0);
 
   let history = useHistory();
 
@@ -50,7 +51,7 @@ const Home = () => {
     });
 
     const { feeds, status } = await dispatch(
-      getFollowingUserFeeds(followingIds)
+      getFollowingUserFeeds(followingIds, index)
     );
 
     if (status === 200 || status === 201) {
