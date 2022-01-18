@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { faCog, faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Header from "../Header";
 import FeedThumbnail from "../FeedThumbnail";
-import feedsData from "../Home/feedsData.json";
+import { getOneUserFeeds } from "../../redux/actions";
+// import feedsData from "../Home/feedsData.json";
 import "../../resources/button.css";
 import "./userPage.css";
 
@@ -28,7 +29,8 @@ const FeedThumbnails = ({ feeds }) => {
               <FontAwesomeIcon icon={faComment} />
               <h2>{commentCount}</h2>
             </div>
-            <img src={feed.files[0].src} />
+            {/* <img src={feed.files[0].src} /> */}
+            <img src="https://img.animalplanet.co.kr/news/2019/10/31/700/191lerah0b366ig7n50c.jpg" />
           </Link>
         );
       })}
@@ -65,10 +67,22 @@ const MyPageBtns = () => {
 
 const UserPage = () => {
   const [isMyPage, setIsMyPage] = useState(true);
+  const [feedsData, setFeedsData] = useState([]);
+  const [index, setIndex] = useState(0);
   const location = useLocation();
   const userName = location.pathname.slice(1);
 
   const dispatch = useDispatch();
+
+  useEffect(async () => {
+    const { feeds, status } = await dispatch(getOneUserFeeds(userName, index));
+
+    if (status === 200 || status === 201) {
+      setFeedsData(feeds);
+    } else {
+      alert("불러오기 실패");
+    }
+  }, []);
   return (
     <section className={"user-feed-page-section "}>
       <Header />

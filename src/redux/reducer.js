@@ -1,5 +1,5 @@
 import {
-  SAVE_TOKEN,
+  SAVE_USER_INFO,
   LOGOUT,
   EMAIL_SIGNUP,
   SET_FOLLOW,
@@ -11,6 +11,7 @@ const initialState = {
   token: "",
   isLogin: false,
   userId: "",
+  userAccountName: "",
   userFollows: [],
   userFollowing: [],
 };
@@ -20,15 +21,16 @@ const reducer = (state = initialState, action) => {
     case EMAIL_SIGNUP:
       return { ...state, result: action.payload };
 
-    case SAVE_TOKEN:
-      const { token, userId } = action;
-      return { ...state, isLogin: true, token, userId };
+    case SAVE_USER_INFO:
+      const { token, userAccountName, userId } = action;
+      return { ...state, isLogin: true, token, userId, userAccountName };
 
     case LOGOUT:
       return {
         token: "",
         isLogin: false,
         userId: "",
+        userAccountName: "",
         userFollows: [],
         userFollowing: [],
       };

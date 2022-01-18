@@ -2,7 +2,7 @@ import React, { useState, useEffect, useLayoutEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getFeeds } from "../../redux/actions";
+import { getFollowingUserFeeds } from "../../redux/actions";
 import Feed from "../Feed";
 import Header from "../Header";
 // import feedsData from "./feedsData.json";
@@ -26,6 +26,7 @@ const useWindowSize = () => {
 const Home = () => {
   const [isNewbie, setIsNewbie] = useState(false);
   const [feedsData, setFeedsData] = useState([]);
+  const [index, setIndex] = useState(0);
 
   let history = useHistory();
 
@@ -45,10 +46,17 @@ const Home = () => {
     const htmlTitle = document.querySelector("title");
     htmlTitle.innerHTML = "Instagram";
 
-    const { feeds, status } = await dispatch(getFeeds());
+    const followingIds = following.map((data) => {
+      return { id: data.following.id };
+    });
 
-    setFeedsData(feeds);
-    if (status !== 200) {
+    const { feeds, status } = await dispatch(
+      getFollowingUserFeeds(followingIds, index)
+    );
+
+    if (status === 200 || status === 201) {
+      setFeedsData(feeds);
+    } else {
       alert("불러오기 실패");
     }
 

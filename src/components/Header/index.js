@@ -75,17 +75,16 @@ const Header = ({ mode = "default" }) => {
   const [isUsered, setIsUsered] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [isPlaceholderShown, setIsPlaceholderShown] = useState(false);
-  const [userName, setUserName] = useState("");
 
   const searchInput = useRef();
   const location = useLocation();
   let history = useHistory();
   const dispatch = useDispatch();
 
+  const userAccountName = useSelector((state) => state.userAccountName);
+
   useEffect(() => {
     setPathname(location.pathname);
-
-    setUserName("userName01");
   }, []);
 
   const _logout = async () => {
@@ -263,7 +262,7 @@ const Header = ({ mode = "default" }) => {
                 >
                   <div className={"menu-top " + "menu-top-user "} />
                   <div className={"menu-content "}>
-                    <Link className={"user-menu-a"} to={`/${userName}`}>
+                    <Link className={"user-menu-a"} to={`/${userAccountName}`}>
                       <FontAwesomeIcon icon={faUserCircle} />
                       <span>프로필</span>
                     </Link>
