@@ -176,7 +176,7 @@ const Header = ({ mode = "default" }) => {
               >
                 <FontAwesomeIcon
                   icon={faPlusSquare}
-                  class={"header-icon-img "}
+                  className={"header-icon-img "}
                 />
               </button>
               <button

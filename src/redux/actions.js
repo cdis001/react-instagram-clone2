@@ -196,6 +196,38 @@ export const deleteFollow = async (followData) => {
   };
 };
 
+export const addFeed = async (feedData) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.post(
+        "/api/feeds",
+        feedData,
+        {
+          headers: {
+            ...(await getHeader()),
+            "Content-type": "multipart/form-data; charset=utf-8",
+          },
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      // console.log(result);
+      const { status, data } = result;
+
+      if (status === 200 || status === 201) {
+        return { status };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      // console.log(errorMessage);
+      return { status: statusCode, message };
+    }
+  };
+};
+
 const saveUserInfo = async (id, accountName, token) => {
   await localStorage.setItem("token", token);
 
