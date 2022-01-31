@@ -52,3 +52,7 @@
   font-weight: 400;
   cursor: default;
 }
+
+.display-none {
+  display: none;
+}

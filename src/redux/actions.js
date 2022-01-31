@@ -228,6 +228,34 @@ export const addFeed = async (feedData) => {
   };
 };
 
+export const deleteFeed = async (id) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.delete(
+        `/api/feeds/${id}`,
+        {
+          headers: await getHeader(),
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      // console.log(result);
+      const { status } = result;
+
+      if (status === 200 || status === 201) {
+        return { status };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      // console.log(errorMessage);
+      return { status: statusCode, message };
+    }
+  };
+};
+
 const saveUserInfo = async (id, accountName, token) => {
   await localStorage.setItem("token", token);
 
