@@ -3,6 +3,8 @@ export const SAVE_USER_INFO = "SAVE_USER_INFO";
 export const LOGOUT = "LOGOUT";
 
 export const SET_FEEDS = "SET_FEEDS";
+export const ADD_FEED = "ADD_FEED";
+export const UPDATE_FEED = "UPDATE_FEED";
 
 export const SET_FOLLOWING = "SET_FOLLOWING";
 export const SET_FOLLOW = "SET_FOLLOW";

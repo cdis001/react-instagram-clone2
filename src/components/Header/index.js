@@ -5,6 +5,7 @@ import {
   faBookmark,
   faHeart,
   faUserCircle,
+  faPlusSquare,
 } from "@fortawesome/free-regular-svg-icons";
 import * as solid from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +16,7 @@ import Logo from "../../resources/images/title_logo.png";
 import { logout } from "../../redux/actions";
 
 import LIKED_BOARD_DATA from "./LikedBoardContent.json";
+import FeedAddForm from "../FeedAddForm";
 
 const LikedBoard = ({ isLikedBoardContent, data }) => {
   // console.log(data);
@@ -75,6 +77,7 @@ const Header = ({ mode = "default" }) => {
   const [isUsered, setIsUsered] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [isPlaceholderShown, setIsPlaceholderShown] = useState(false);
+  const [isFeedAddFormShow, setIsFeedAddFormShow] = useState(false);
 
   const searchInput = useRef();
   const location = useLocation();
@@ -166,6 +169,15 @@ const Header = ({ mode = "default" }) => {
                       : "paper-plane-outline"
                   }
                 ></ion-icon>
+              </button>
+              <button
+                className={"header-icon "}
+                onClick={() => setIsFeedAddFormShow(true)}
+              >
+                <FontAwesomeIcon
+                  icon={faPlusSquare}
+                  className={"header-icon-img "}
+                />
               </button>
               <button
                 className={"header-icon "}
@@ -315,6 +327,9 @@ const Header = ({ mode = "default" }) => {
           </Link>
         </div>
         {mode === "none" ? null : <HeaderContent />}
+        {isFeedAddFormShow ? (
+          <FeedAddForm setIsFeedAddFormShow={setIsFeedAddFormShow} />
+        ) : null}
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   faBookmark,
   faComment,
@@ -12,6 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./feed.css";
 import MenuBox from "../MenuBox";
+import { deleteFeed } from "../../redux/actions";
 
 const FeedCommentBox = ({ isDetail }) => {
   return (
@@ -173,6 +175,7 @@ const FeedHeader = ({
 };
 
 const Feed = ({
+  id,
   user,
   contents,
   location,
@@ -182,10 +185,15 @@ const Feed = ({
   type = "default",
 }) => {
   const [showMenu, setShowMenu] = useState(false);
+  const [showDeleteMenu, setShowDeleteMenu] = useState(false);
+
+  const dispatch = useDispatch();
+  const userId = useSelector((state) => state.userId);
+  const userAccountName = useSelector((state) => state.userAccountName);
 
   let history = useHistory();
 
-  const { userName } = user;
+  const { userName, id: feedOwnerId } = user;
   const feedContents = contents;
   const feedLocation = location;
   const feedImg = files[0];
@@ -194,21 +202,60 @@ const Feed = ({
   const likeCnt = likes.length;
   const detailType = type === "detail" ? "detail-feed-" : null;
   const isDetail = type === "detail";
-  const menus = [
-    { id: 1, title: "신고", onClick: () => {}, buttonStyle: "menu-red-b" },
+  const deleteMenus = [
+    {
+      id: 1,
+      title: `게시물을 삭제하시겠어요?`,
+      buttonStyle: "menu-title",
+    },
     {
       id: 2,
-      title: "팔로우 취소",
-      onClick: () => {},
+      title: "삭제",
+      onClick: async () => {
+        const { status } = await dispatch(deleteFeed(id));
+
+        if (status === 200 || status === 201) {
+          setShowDeleteMenu(false);
+          history.push(`/${userAccountName}`);
+        } else {
+          alert("실패");
+        }
+      },
       buttonStyle: "menu-red-b",
     },
     {
       id: 3,
-      title: "게시물로 이동",
-      onClick: () => {
-        history.push({ pathname: `/p/1` });
-      },
+      title: "취소",
+      onClick: () => setShowDeleteMenu(false),
     },
+  ];
+  const menus = [
+    { id: 1, title: "신고", onClick: () => {}, buttonStyle: "menu-red-b" },
+    userId === feedOwnerId
+      ? {
+          id: 2,
+          title: "삭제",
+          onClick: async () => {
+            setShowMenu(false);
+            setShowDeleteMenu(true);
+          },
+          buttonStyle: "menu-red-b",
+        }
+      : {
+          id: 2,
+          title: "팔로우 취소",
+          onClick: () => {},
+          buttonStyle: "menu-red-b",
+        },
+    isDetail
+      ? { id: -1, buttonStyle: "display-none" }
+      : {
+          id: 3,
+          title: "게시물로 이동",
+          onClick: () => {
+            history.push({ pathname: `/p/1` });
+          },
+        },
     { id: 4, title: "취소", onClick: () => setShowMenu(false) },
   ];
 
@@ -272,6 +319,7 @@ const Feed = ({
             </>
           )}
           <FeedCommentBox isDetail={isDetail} />
+          {showDeleteMenu ? <MenuBox menus={deleteMenus} /> : null}
         </div>
       </div>
     </article>
