@@ -256,6 +256,34 @@ export const deleteFeed = async (id) => {
   };
 };
 
+export const addComment = async (commentData) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.post(
+        `/api/comments`,
+        { ...commentData },
+        {
+          headers: await getHeader(),
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      const { status, data } = result;
+
+      if (status === 200 || status === 201) {
+        return { status, comment: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      // console.log(errorMessage);
+      return { status: statusCode, message };
+    }
+  };
+};
+
 const saveUserInfo = async (id, accountName, token) => {
   await localStorage.setItem("token", token);
 
