@@ -138,6 +138,23 @@ export const getOneUserFeeds = async (id, index) => {
   };
 };
 
+export const getFeedByFeedId = async (id) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.get(`/api/feeds/${id}`);
+      const { status, data } = result;
+
+      if (status === 200 || status === 201) {
+        return { status, feedData: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
 export const addFollow = async (followData) => {
   return async (dispatch) => {
     try {
