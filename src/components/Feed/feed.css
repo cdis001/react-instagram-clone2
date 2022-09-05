@@ -165,6 +165,15 @@ p {
   letter-spacing: 0.2px;
 }
 
+.feed-detail-commnet-btn {
+  position: absolute;
+  left: 50px;
+  bottom: 20%;
+  font-size: 16px;
+  font-weight: 700;
+  color: rgb(142, 142, 142);
+}
+
 .feed-comment-box {
   margin: 4px 0 0 0;
   padding: 8px 16px;

@@ -13,9 +13,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./feed.css";
 import MenuBox from "../MenuBox";
-import { deleteFeed } from "../../redux/actions";
+import { deleteFeed, addComment, deleteComment } from "../../redux/actions";
 
-const FeedCommentBox = ({ isDetail }) => {
+const FeedCommentBox = ({
+  isDetail,
+  commentText,
+  setCommentText,
+  _onCommentAdd,
+}) => {
   return (
     <div className={`feed-comment-box ${isDetail ? "margin-t-14 " : ""}`}>
       <FontAwesomeIcon
@@ -24,12 +29,13 @@ const FeedCommentBox = ({ isDetail }) => {
       />
       <textarea
         placeholder={"댓글 달기..."}
-        // value={commentText}
-        // onChange={(e) => setCommentText(e.target.value)}
+        value={commentText}
+        onChange={(e) => setCommentText(e.target.value)}
       />
       <button
         className={"white-blue-btn"}
-        // disabled={commentText.length > 0 ? false : true}
+        disabled={commentText.length > 0 ? false : true}
+        onClick={_onCommentAdd}
       >
         게시
       </button>
@@ -38,19 +44,80 @@ const FeedCommentBox = ({ isDetail }) => {
 };
 
 const DetailFeedComment = ({ contents, user }) => {
+  const [isCommentHovering, setIsCommentHovering] = useState(false);
+  const [showCommentMenu, setShowCommentMenu] = useState(false);
+  const [showCommentDeleteMenu, setShowCommentDeleteMenu] = useState(false);
+
   const { userName } = user;
   const commentContents = contents;
+  const commentDeleteMenus = [
+    {
+      id: 1,
+      title: `댓글을 삭제하시겠어요?`,
+      buttonStyle: "menu-title",
+    },
+    {
+      id: 2,
+      title: "삭제",
+      onClick: async () => {
+        // const { status } = await dispatch(deleteComment(id));
+        // if (status === 200 || status === 201) {
+        //   setShowDeleteMenu(false);
+        //   history.push(`/${userAccountName}`);
+        // } else {
+        //   alert("실패");
+        // }
+      },
+      buttonStyle: "menu-red-b",
+    },
+    {
+      id: 3,
+      title: "취소",
+      onClick: () => setShowCommentDeleteMenu(false),
+    },
+  ];
+  const commentMenus = [
+    { id: 1, title: "신고", onClick: () => {}, buttonStyle: "menu-red-b" },
+    {
+      id: 2,
+      title: "삭제",
+      onClick: async () => {
+        setShowCommentMenu(false);
+        setShowCommentDeleteMenu(true);
+      },
+      buttonStyle: "menu-red-b",
+    },
+    { id: 4, title: "취소", onClick: () => setShowCommentMenu(false) },
+  ];
   return (
-    <div className={"padding-t-12"}>
+    <div
+      className={"padding-t-12"}
+      onMouseEnter={() => setIsCommentHovering(true)}
+      onMouseLeave={() => setIsCommentHovering(false)}
+    >
       <div className={"flex-direction-r"}>
         <div className={"feed-header-photo"} />
         <p className={"feed-comment-p margin-l-14"}>
           <span className={"feed-username "}>{userName}</span>
           {commentContents}
-          <p className={"datetime font-size-12 margin-t-16"}>4일 전</p>
+          <div className="margin-t-16 flex-direction-r">
+            <p className={"datetime font-size-12 "}>4일 전</p>
+            {isCommentHovering ? (
+              <button
+                className={"feed-detail-commnet-btn "}
+                onClick={(e) => setShowCommentMenu(true)}
+              >
+                ...
+              </button>
+            ) : (
+              ""
+            )}
+          </div>
         </p>
       </div>
       <div className={"margin-l-46"}></div>
+      {showCommentMenu ? <MenuBox menus={commentMenus} /> : null}
+      {showCommentDeleteMenu ? <MenuBox menus={commentDeleteMenus} /> : null}
     </div>
   );
 };
@@ -77,12 +144,6 @@ const DetailFeedContents = ({ userName, feedContents, feedComments }) => {
         <h3 className={"margin-l-15 " + "feed-username "}>{userName}&nbsp;</h3>
         <p className={"feed-comment-p "}>{feedContents}</p>
       </div>
-      {feedComments.map((comment) => (
-        <DetailFeedComment {...comment} />
-      ))}
-      {feedComments.map((comment) => (
-        <DetailFeedComment {...comment} />
-      ))}
       {feedComments.map((comment) => (
         <DetailFeedComment {...comment} />
       ))}
@@ -186,6 +247,8 @@ const Feed = ({
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showDeleteMenu, setShowDeleteMenu] = useState(false);
+  const [feedComments, setFeedComments] = useState(comments);
+  const [commentText, setCommentText] = useState("");
 
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userId);
@@ -193,12 +256,15 @@ const Feed = ({
 
   let history = useHistory();
 
+  console.log(id);
+  console.log(user);
+  console.log(user.userName);
+  const feedId = id;
   const { userName, id: feedOwnerId } = user;
   const feedContents = contents;
   const feedLocation = location;
   const feedImg = files[0];
-  const feedComments = comments;
-  const commentCnt = comments.length;
+  const commentCnt = feedComments.length;
   const likeCnt = likes.length;
   const detailType = type === "detail" ? "detail-feed-" : null;
   const isDetail = type === "detail";
@@ -253,11 +319,28 @@ const Feed = ({
           id: 3,
           title: "게시물로 이동",
           onClick: () => {
-            history.push({ pathname: `/p/1` });
+            history.push({ pathname: `/p/${feedId}` });
           },
         },
     { id: 4, title: "취소", onClick: () => setShowMenu(false) },
   ];
+
+  const _onCommentAdd = async () => {
+    const commentData = {
+      userId,
+      feedId,
+      contents: commentText,
+    };
+
+    const { status, comment } = await dispatch(addComment(commentData));
+
+    if (status === 200 || status === 201) {
+      setFeedComments([...feedComments, comment]);
+      setCommentText("");
+    } else {
+      alert("댓글 등록 실패");
+    }
+  };
 
   return (
     <article
@@ -295,6 +378,7 @@ const Feed = ({
           {isDetail ? (
             <>
               <DetailFeedContents
+                key={id}
                 userName={userName}
                 feedContents={feedContents}
                 feedComments={feedComments}
@@ -318,7 +402,12 @@ const Feed = ({
               />
             </>
           )}
-          <FeedCommentBox isDetail={isDetail} />
+          <FeedCommentBox
+            isDetail={isDetail}
+            commentText={commentText}
+            setCommentText={setCommentText}
+            _onCommentAdd={_onCommentAdd}
+          />
           {showDeleteMenu ? <MenuBox menus={deleteMenus} /> : null}
         </div>
       </div>
