@@ -5,8 +5,10 @@ export const LOGOUT = "LOGOUT";
 export const SET_FEEDS = "SET_FEEDS";
 export const ADD_FEED = "ADD_FEED";
 export const UPDATE_FEED = "UPDATE_FEED";
+export const GET_FEED_BY_FEED_ID = "GET_FEED_BY_FEED_ID";
 
 export const ADD_COMMENT = "ADD_COMMENT";
+export const DELETE_COMMENT = "DELETE_COMMENT";
 
 export const SET_FOLLOWING = "SET_FOLLOWING";
 export const SET_FOLLOW = "SET_FOLLOW";
