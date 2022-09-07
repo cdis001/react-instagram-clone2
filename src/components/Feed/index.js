@@ -43,13 +43,17 @@ const FeedCommentBox = ({
   );
 };
 
-const DetailFeedComment = ({ contents, user }) => {
+const DetailFeedComment = ({ id, contents, user }) => {
   const [isCommentHovering, setIsCommentHovering] = useState(false);
   const [showCommentMenu, setShowCommentMenu] = useState(false);
   const [showCommentDeleteMenu, setShowCommentDeleteMenu] = useState(false);
 
+  const dispatch = useDispatch();
+  const userId = useSelector((state) => state.userId);
+
   const { userName } = user;
   const commentContents = contents;
+  const commentId = id;
   const commentDeleteMenus = [
     {
       id: 1,
@@ -60,13 +64,13 @@ const DetailFeedComment = ({ contents, user }) => {
       id: 2,
       title: "삭제",
       onClick: async () => {
-        // const { status } = await dispatch(deleteComment(id));
-        // if (status === 200 || status === 201) {
-        //   setShowDeleteMenu(false);
-        //   history.push(`/${userAccountName}`);
-        // } else {
-        //   alert("실패");
-        // }
+        const { status } = await dispatch(deleteComment(commentId, userId));
+        if (status === 200 || status === 201) {
+          setShowCommentDeleteMenu(false);
+          window.location.reload();
+        } else {
+          alert("실패");
+        }
       },
       buttonStyle: "menu-red-b",
     },
@@ -256,9 +260,6 @@ const Feed = ({
 
   let history = useHistory();
 
-  console.log(id);
-  console.log(user);
-  console.log(user.userName);
   const feedId = id;
   const { userName, id: feedOwnerId } = user;
   const feedContents = contents;

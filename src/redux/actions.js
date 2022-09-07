@@ -277,7 +277,7 @@ export const addComment = async (commentData) => {
   return async (dispatch) => {
     try {
       const result = await axios.post(
-        `/api/comments`,
+        `/api/comments/${commentData.id}`,
         { ...commentData },
         {
           headers: await getHeader(),
@@ -296,6 +296,30 @@ export const addComment = async (commentData) => {
       const errorMessage = e.response.data;
       const { statusCode, message } = errorMessage;
       // console.log(errorMessage);
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const deleteComment = async (commentId, userId) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.delete(`/api/comments/${commentId}`, {
+        data: { id: userId },
+        withCredentials: true,
+        headers: await getHeader(),
+      });
+
+      const { status, data } = result;
+      console.log(result);
+
+      if (status === 200 || status === 201) {
+        return { status, comment: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      console.log(errorMessage);
       return { status: statusCode, message };
     }
   };

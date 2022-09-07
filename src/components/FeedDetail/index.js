@@ -22,8 +22,6 @@ const FeedDetail = () => {
     if (status === 200 || status === 201) {
       setFeed(feedData);
       setIsLoading(false);
-      // console.log(feedData);
-      // console.log(feedsData[0]);
     } else {
       alert("불러오기 실패");
     }
