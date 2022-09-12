@@ -18,6 +18,7 @@ const FeedDetail = () => {
 
   useEffect(async () => {
     const { feedData, status } = await dispatch(getFeedByFeedId(id));
+    console.log(feedData);
 
     if (status === 200 || status === 201) {
       setFeed(feedData);

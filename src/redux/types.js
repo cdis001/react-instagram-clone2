@@ -14,3 +14,6 @@ export const SET_FOLLOWING = "SET_FOLLOWING";
 export const SET_FOLLOW = "SET_FOLLOW";
 export const REMOVE_FOLLOWING = "REMOVE_FOLLOWING";
 export const REMOVE_FOLLOW = "REMOVE_FOLLOW";
+
+export const SET_LIKE = "SET_LIKE";
+export const REMOVE_LIKE = "REMOVE_LIKE";

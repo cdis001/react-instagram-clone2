@@ -22,7 +22,10 @@ const Feed = ({
   type = "default",
 }) => {
   const [feedComments, setFeedComments] = useState(comments);
+  const [likesObj, setLikesObj] = useState(likes);
   const [commentText, setCommentText] = useState("");
+  const [isLike, setIsLike] = useState(false);
+  const [likeCnt, setLikeCnt] = useState(0);
 
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.userId);
@@ -33,7 +36,6 @@ const Feed = ({
   const feedLocation = location;
   const feedImg = files[0];
   const commentCnt = feedComments.length;
-  const likeCnt = likes.length;
   const detailType = type === "detail" ? "detail-feed-" : null;
   const isDetail = type === "detail";
   const isFeedOwner = userId === feedOwnerId;
@@ -54,6 +56,9 @@ const Feed = ({
       alert("댓글 등록 실패");
     }
   };
+  useEffect(() => {
+    setLikeCnt(likesObj.length);
+  }, [likesObj]);
 
   return (
     <article
@@ -97,7 +102,14 @@ const Feed = ({
                 feedComments={feedComments}
                 setFeedComments={setFeedComments}
               />
-              <FeedActions />
+              <FeedActions
+                feedId={feedId}
+                likesObj={likesObj}
+                setLikesObj={setLikesObj}
+                isLike={isLike}
+                setIsLike={setIsLike}
+                setLikeCnt={setLikeCnt}
+              />
               <h3
                 className={"font-size-14 margin-b-8 margin-t-8 padding-h-16"}
               >{`좋아요 ${likeCnt}개`}</h3>
@@ -105,7 +117,14 @@ const Feed = ({
             </>
           ) : (
             <>
-              <FeedActions />
+              <FeedActions
+                feedId={feedId}
+                likesObj={likesObj}
+                setLikesObj={setLikesObj}
+                isLike={isLike}
+                setIsLike={setIsLike}
+                setLikeCnt={setLikeCnt}
+              />
               <FeedContents
                 likeCnt={likeCnt}
                 userName={userName}

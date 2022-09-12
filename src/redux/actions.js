@@ -213,6 +213,62 @@ export const deleteFollow = async (followData) => {
   };
 };
 
+export const addLike = async (likeData) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.post(
+        "/api/likes",
+        likeData,
+        {
+          headers: await getHeader(),
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      const { status, data } = result;
+      // console.log(result);
+
+      if (status === 200 || status === 201) {
+        return { status, likeData: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      // console.log(errorMessage);
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const deleteLike = async (likeData) => {
+  return async (dispatch) => {
+    const { id, userId } = likeData;
+    try {
+      const result = await axios.delete(
+        `/api/likes/${id}`,
+        { data: { userId } },
+        {
+          headers: await getHeader(),
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      const { status, data } = result;
+
+      if (status === 200 || status === 201) {
+        return { status, likeData: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      console.log(errorMessage);
+      return { status: statusCode, message };
+    }
+  };
+};
+
 export const addFeed = async (feedData) => {
   return async (dispatch) => {
     try {
@@ -239,7 +295,7 @@ export const addFeed = async (feedData) => {
     } catch (e) {
       const errorMessage = e.response.data;
       const { statusCode, message } = errorMessage;
-      // console.log(errorMessage);
+      console.log(errorMessage);
       return { status: statusCode, message };
     }
   };
@@ -277,7 +333,7 @@ export const addComment = async (commentData) => {
   return async (dispatch) => {
     try {
       const result = await axios.post(
-        `/api/comments/${commentData.id}`,
+        `/api/comments`,
         { ...commentData },
         {
           headers: await getHeader(),
@@ -295,7 +351,7 @@ export const addComment = async (commentData) => {
     } catch (e) {
       const errorMessage = e.response.data;
       const { statusCode, message } = errorMessage;
-      // console.log(errorMessage);
+      console.log(errorMessage);
       return { status: statusCode, message };
     }
   };
