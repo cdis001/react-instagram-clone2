@@ -24,7 +24,8 @@ const Feed = ({
   const [feedComments, setFeedComments] = useState(comments);
   const [likesObj, setLikesObj] = useState(likes);
   const [commentText, setCommentText] = useState("");
-  const [isLike, setIsLike] = useState(false);
+  const [isFeedLike, setIsFeedLike] = useState(false);
+  const [isCommentLike, setIsCommentLike] = useState(false);
   const [likeCnt, setLikeCnt] = useState(0);
 
   const dispatch = useDispatch();
@@ -106,8 +107,8 @@ const Feed = ({
                 feedId={feedId}
                 likesObj={likesObj}
                 setLikesObj={setLikesObj}
-                isLike={isLike}
-                setIsLike={setIsLike}
+                isFeedLike={isFeedLike}
+                setIsFeedLike={setIsFeedLike}
                 setLikeCnt={setLikeCnt}
               />
               <h3
@@ -121,16 +122,18 @@ const Feed = ({
                 feedId={feedId}
                 likesObj={likesObj}
                 setLikesObj={setLikesObj}
-                isLike={isLike}
-                setIsLike={setIsLike}
+                isFeedLike={isFeedLike}
+                setIsFeedLike={setIsFeedLike}
                 setLikeCnt={setLikeCnt}
               />
               <FeedContents
+                key={feedId}
                 likeCnt={likeCnt}
                 userName={userName}
                 feedContents={feedContents}
                 commentCnt={commentCnt}
                 feedComments={feedComments}
+                setFeedComments={setFeedComments}
                 isDetail={isDetail}
               />
             </>

@@ -213,6 +213,24 @@ export const deleteFollow = async (followData) => {
   };
 };
 
+export const getLike = async (likeData) => {
+  return async (dispatch) => {
+    const { target, id } = likeData;
+    try {
+      const result = await axios.get(`/api/likes/${target}/${id}`);
+      const { status, data } = result;
+
+      if (status === 200 || status === 201) {
+        return { status, data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
 export const addLike = async (likeData) => {
   return async (dispatch) => {
     try {
@@ -230,7 +248,7 @@ export const addLike = async (likeData) => {
       // console.log(result);
 
       if (status === 200 || status === 201) {
-        return { status, likeData: data };
+        return { status, data };
       }
     } catch (e) {
       const errorMessage = e.response.data;

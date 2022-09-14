@@ -16,8 +16,8 @@ const FeedActions = ({
   feedId,
   likesObj = [],
   setLikesObj,
-  isLike,
-  setIsLike,
+  isFeedLike,
+  setIsFeedLike,
   setLikeCnt,
 }) => {
   const [myLike, setMyLike] = useState([]);
@@ -31,7 +31,7 @@ const FeedActions = ({
 
     if (status === 200 || status === 201) {
       setMyLike(likeData);
-      setIsLike(!isLike);
+      isFeedLike(!isFeedLike);
       setLikesObj([...likesObj, likeData]);
     } else {
       alert("좋아요 등록 실패");
@@ -40,12 +40,14 @@ const FeedActions = ({
 
   const _deleteLikes = async () => {
     const deleteLikesData = { id: myLike.id, userId };
-    const { likeData, status } = await dispatch(deleteLike(deleteLikesData));
+    const { likeData: data, status } = await dispatch(
+      deleteLike(deleteLikesData)
+    );
 
     if (status === 200 || status === 201) {
       const newLikesObj = likesObj.filter((data) => data.user.id !== userId);
       setMyLike([]);
-      setIsLike(!isLike);
+      isFeedLike(!isFeedLike);
       setLikesObj(newLikesObj);
     } else {
       alert("좋아요 삭제 실패");
@@ -54,19 +56,18 @@ const FeedActions = ({
 
   useEffect(() => {
     const data = likesObj.filter((data) => data.user.id === userId) || null;
-    console.log(data);
 
     setMyLike(...data);
     if (data.length !== 0) {
-      setIsLike(true);
+      setIsFeedLike(true);
     }
   }, []);
 
   return (
     <div className="feed-actions">
-      <button onClick={isLike ? _deleteLikes : _addLikes}>
+      <button onClick={isFeedLike ? _deleteLikes : _addLikes}>
         <FontAwesomeIcon
-          icon={isLike ? solid.faHeart : faHeart}
+          icon={isFeedLike ? solid.faHeart : faHeart}
           className={"feed-action-icons "}
         />
       </button>

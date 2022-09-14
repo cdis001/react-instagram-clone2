@@ -1,11 +1,16 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
+import React, {
+  useState,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useCallback,
+} from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getFollowingUserFeeds } from "../../redux/actions";
 import Feed from "../Feed";
 import Header from "../Header";
-// import feedsData from "./feedsData.json";
 import "./home.css";
 import "../../resources/button.css";
 import FollowButton from "../FollowButton";
