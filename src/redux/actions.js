@@ -138,6 +138,23 @@ export const getOneUserFeeds = async (id, index) => {
   };
 };
 
+export const getFeedByFeedId = async (id) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.get(`/api/feeds/${id}`);
+      const { status, data } = result;
+
+      if (status === 200 || status === 201) {
+        return { status, feedData: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
 export const addFollow = async (followData) => {
   return async (dispatch) => {
     try {
@@ -196,6 +213,80 @@ export const deleteFollow = async (followData) => {
   };
 };
 
+export const getLike = async (likeData) => {
+  return async (dispatch) => {
+    const { target, id } = likeData;
+    try {
+      const result = await axios.get(`/api/likes/${target}/${id}`);
+      const { status, data } = result;
+
+      if (status === 200 || status === 201) {
+        return { status, data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const addLike = async (likeData) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.post(
+        "/api/likes",
+        likeData,
+        {
+          headers: await getHeader(),
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      const { status, data } = result;
+      // console.log(result);
+
+      if (status === 200 || status === 201) {
+        return { status, data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      // console.log(errorMessage);
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const deleteLike = async (likeData) => {
+  return async (dispatch) => {
+    const { id, userId } = likeData;
+    try {
+      const result = await axios.delete(
+        `/api/likes/${id}`,
+        { data: { userId } },
+        {
+          headers: await getHeader(),
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      const { status, data } = result;
+
+      if (status === 200 || status === 201) {
+        return { status, likeData: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      console.log(errorMessage);
+      return { status: statusCode, message };
+    }
+  };
+};
+
 export const addFeed = async (feedData) => {
   return async (dispatch) => {
     try {
@@ -222,7 +313,7 @@ export const addFeed = async (feedData) => {
     } catch (e) {
       const errorMessage = e.response.data;
       const { statusCode, message } = errorMessage;
-      // console.log(errorMessage);
+      console.log(errorMessage);
       return { status: statusCode, message };
     }
   };
@@ -278,7 +369,31 @@ export const addComment = async (commentData) => {
     } catch (e) {
       const errorMessage = e.response.data;
       const { statusCode, message } = errorMessage;
-      // console.log(errorMessage);
+      console.log(errorMessage);
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const deleteComment = async (commentId, userId) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.delete(`/api/comments/${commentId}`, {
+        data: { id: userId },
+        withCredentials: true,
+        headers: await getHeader(),
+      });
+
+      const { status, data } = result;
+      console.log(result);
+
+      if (status === 200 || status === 201) {
+        return { status, comment: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      console.log(errorMessage);
       return { status: statusCode, message };
     }
   };
