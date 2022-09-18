@@ -1,70 +1,67 @@
-# Getting Started with Create React App
+# react-instagram-clone2
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- 인스타 웹 페이지를 기반으로 만든 클론 사이트
+- nestjs-instagram-clone과 연동
 
-## Available Scripts
+> https://github.com/cdis001/nestjs-instagram-clone
 
-In the project directory, you can run:
+## 1. 기술 스택
 
-### `yarn start`
+- react
+  - 전체 프로젝트의 틀을 잡아주는 프레임워크 개념으로 사용
+- redux
+  - react 프로젝트에서 상태 관리를 위해 사용
+- react-router
+  - react 프로젝트 내에서 라우팅을 하기 위해 사용
+  - BrowserRouter와 HashRouter 두 종류가 있었으나 BrowserRouter 사용
+    - HashRouter는 location.key 혹은 location.state과 같은 위치 정보를 저장하지 않기에 공식문서의 조언대로 BrowserRouter 사용
+- 그 외, 아이콘 관련 라이브러리들
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 2. 실행 방법
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+1. nestjs-instagram-clone 저장소에서 소스를 clone한다
+2. nestjs-instagram-clone 프로젝트의 도커 설치 및 실행
+3. nestjs-instagram-clone 프로젝트 폴더에서 npm install 명령어 실행
+4. npm 설치 완료 후, npm start run 명령어 실행
+5. react-instagram-clone2 저장소에서 소스를 clone한다
+6. react-instagram-clone2 프로젝트 폴더에서 yarn install 명령어 실행
+7. 라이브러리 설치 완료 후 yarn start 명령어 실행
 
-### `yarn test`
+## 3. 주요 기능
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Auth
 
-### `yarn build`
+   - 로그인
+   - 회원가입
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Feed
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   - 피드 추가
+   - 피드 읽어오기
+   - 피드 삭제
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Follow
 
-### `yarn eject`
+   - 팔로우 기능 추가
+   - 팔로워들 모아서 볼 수 있는 기능 추가
+   - 메인페이지에서는 팔로워들의 게시글만 볼 수 있게끔 구현
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+4. Comment
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   - 댓글 추가
+   - 댓글 삭제
+   - 댓글 읽어오기
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+5. Like
+   - 피드에 좋아요 누를 수 있는 기능 추가
+   - 댓글에 좋아요 누를 수 있는 기능 추가
+   - 피드에 좋아요를 누른 사람들의 수를 보여주는 기능 추가
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## 4. 추가 예정 기능
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- [ ] 피드 무한스크롤
+- [ ] 날짜 관련 데이터 계산하는 로직 추가(n일전...)
+- [ ] user page의 팔로워, 팔로우 등의 데이터 실제 데이터로 추가
+- [ ] 프로필 편집 기능 추가
+- [ ] 헤더에 알람기능 추가
+- [ ] DM 기능 추가
