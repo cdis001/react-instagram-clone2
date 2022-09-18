@@ -29,8 +29,8 @@ const FeedThumbnails = ({ feeds }) => {
               <FontAwesomeIcon icon={faComment} />
               <h2>{commentCount}</h2>
             </div>
-            {/* <img src={feed.files[0].src} /> */}
-            <img src="https://img.animalplanet.co.kr/news/2019/10/31/700/191lerah0b366ig7n50c.jpg" />
+            <img src={feed.files[0].src} />
+            {/* <img src="https://img.animalplanet.co.kr/news/2019/10/31/700/191lerah0b366ig7n50c.jpg" /> */}
           </Link>
         );
       })}
