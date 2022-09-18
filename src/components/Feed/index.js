@@ -77,8 +77,8 @@ const Feed = ({
       <div className={`${isDetail ? "detail-feed-photo-div" : ""}`}>
         <img
           className={`feed-photo ${isDetail ? " detail-feed-photo" : ""}`}
-          // src={feedImg}
-          src={`http://www.astronomer.rocks/news/photo/201802/82361_623_1441.jpeg`}
+          src={feedImg}
+          // src={`http://www.astronomer.rocks/news/photo/201802/82361_623_1441.jpeg`}
           sizes={"614px"}
           alt={"feedImg"}
         />
