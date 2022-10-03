@@ -46,9 +46,10 @@ export const loginRequest = async (userData) => {
       });
       // console.log(loginData);
       const { status, data } = loginData;
-      const { id, accessToken, accountName, follower, following } = data;
+      const { id, accessToken, accountName, follower, following, profile } =
+        data;
       if (accessToken) {
-        dispatch(await saveUserInfo(id, accountName, accessToken));
+        dispatch(await saveUserInfo(id, accountName, accessToken, profile));
       }
       if (follower.length > 0 || following.length > 0) {
         dispatch(await setFollow(follower, following));
@@ -399,7 +400,7 @@ export const deleteComment = async (commentId, userId) => {
   };
 };
 
-const saveUserInfo = async (id, accountName, token) => {
+const saveUserInfo = async (id, accountName, token, profile) => {
   await localStorage.setItem("token", token);
 
   return {
@@ -407,6 +408,7 @@ const saveUserInfo = async (id, accountName, token) => {
     token,
     userId: id,
     userAccountName: accountName,
+    userProfile: profile,
   };
 };
 
