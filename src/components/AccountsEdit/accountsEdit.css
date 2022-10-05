@@ -1,0 +1,168 @@
+.aedit-content-container {
+  margin-top: 54px;
+  padding: 30px 0;
+  width: 100%;
+  max-width: 935px;
+}
+
+.aedit-content-box {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(219, 219, 219);
+  flex-direction: row;
+  height: 900px;
+}
+
+.aedit-box-left-nav {
+  border-right: 1px solid rgb(219, 219, 219);
+  display: flex;
+  flex-basis: 236px;
+  flex-direction: column;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.aedit-box-left-nav-title {
+  padding: 16px 16px 16px calc(32px - 2px);
+  color: rgb(38, 38, 38);
+  font-size: 16px;
+  line-height: 20px;
+  border-left: 2px solid transparent;
+}
+
+.aedit-box-content {
+  align-items: stretch;
+  border: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 400px;
+  flex-direction: column;
+  margin: 0;
+  min-width: 50px;
+  padding: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.aedit-box-header {
+  margin: 32px 0 0;
+  flex-direction: row;
+}
+
+.aedit-header-left {
+  border: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-shrink: 0;
+  height: 38px;
+  width: 38px;
+  margin: 2px 32px 0 124px;
+  position: relative;
+}
+
+.aedit-header-left button {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+}
+
+.aedit-header-left button img {
+  height: 38px;
+  width: 38px;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+.aedit-header-username {
+  font-size: 20px;
+  line-height: 22px;
+  margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.aedit-header-right {
+  align-items: stretch;
+  display: flex;
+  flex: 0 1 auto;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
+.aedit-header-right button {
+  line-height: normal;
+  padding: 0;
+  text-align: start;
+}
+
+.nav-title-active {
+  font-weight: 600;
+  border-left: 2px solid rgb(38, 38, 38);
+}
+
+.aedit-box-form {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  margin: 16px 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+.aedit-box-el {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 16px;
+  flex-direction: row;
+}
+
+.aedit-box-el-title {
+  padding: 0 32px;
+  text-align: right;
+  box-sizing: border-box;
+  color: rgb(38, 38, 38);
+  flex: 0 0 194px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 18px;
+  margin-top: 6px;
+}
+
+.aedit-box-el-content {
+  width: 100%;
+  max-width: 355px;
+  flex: 0 0 auto;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: stretch;
+  align-content: stretch;
+  display: inline-block;
+}
+
+.aedit-box-el-content-input {
+  background: transparent;
+  border: 1px solid rgb(219, 219, 219);
+  border-radius: 3px;
+  box-sizing: border-box;
+  color: rgb(38, 38, 38);
+  flex: 0 1 355px;
+  font-size: 16px;
+  height: 32px;
+  padding: 0 10px;
+  width: 100%;
+}
+
+@media (min-width: 451px) and (max-width: 965px) {
+  .aedit-content-container {
+    max-width: calc(100% - 20px);
+  }
+}
+
+.mt-16 {
+  margin-top: 16px;
+}

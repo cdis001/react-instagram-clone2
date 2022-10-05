@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { faCog, faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -47,9 +47,13 @@ const UserPageBtns = () => {
 };
 
 const MyPageBtns = () => {
+  let history = useHistory();
   return (
     <div className={"feed-page-btns"}>
-      <button className={"feed-page-profile-setting margin-l-20"}>
+      <button
+        className={"feed-page-profile-setting margin-l-20"}
+        onClick={() => history.push("/accounts/edit")}
+      >
         프로필 편집
       </button>
       <button className={"feed-page-user-setting"}>
@@ -77,7 +81,7 @@ const UserPage = () => {
   const following = useSelector((state) => state.userFollowing);
   const follows = useSelector((state) => state.userFollows);
 
-  console.log(!!userProfile);
+  // console.log(!!userProfile);
   // console.log(following);
   // console.log(follows);
 

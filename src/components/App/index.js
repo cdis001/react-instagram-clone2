@@ -8,6 +8,7 @@ import DM from "../DirectInbox";
 import Explore from "../Explore";
 import FeedDetail from "../FeedDetail";
 import UserPage from "../UserPage";
+import AccountsEdit from "../AccountsEdit";
 
 const App = () => {
   return (
@@ -35,6 +36,8 @@ const App = () => {
         <Route path="/p/:id" exact component={FeedDetail} />
         {/* https://www.instagram.com/dlwlrma */}
         <Route path="/:id" exact component={UserPage} />
+        {/* https://www.instagram.com/accounts/edit/ */}
+        <Route path="/accounts/edit" exact component={AccountsEdit} />
       </Switch>
     </Router>
   );
