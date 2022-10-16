@@ -7,6 +7,7 @@ import {
   SET_FOLLOW,
   SET_FOLLOWING,
   REMOVE_FOLLOWING,
+  UPDATE_USER_INFO,
 } from "./types";
 
 axios.defaults.withCredentials = true;
@@ -94,6 +95,42 @@ export const validationAccountName = async (accountName) => {
       }
     } catch (e) {
       const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const getUserInfo = async (id) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.get(`/api/users/${id}`);
+      const { status, data } = result;
+
+      if (status === 200) {
+        return { status, userInfo: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const editUserInfo = async (userData) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.post("/api/users", userData);
+
+      const { status, data } = result;
+
+      if (status === 200 || status === 201) {
+        dispatch(await updateUserInfo(data.userName));
+      }
+      return { status, userInfo: data };
+    } catch (err) {
+      const errorMessage = err.response.data;
       const { statusCode, message } = errorMessage;
       return { status: statusCode, message };
     }
@@ -409,6 +446,13 @@ const saveUserInfo = async (id, accountName, token, profile) => {
     userId: id,
     userAccountName: accountName,
     userProfile: profile,
+  };
+};
+
+const updateUserInfo = async (userName) => {
+  return {
+    type: UPDATE_USER_INFO,
+    userAccountName: userName,
   };
 };
 

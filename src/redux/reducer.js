@@ -5,6 +5,7 @@ import {
   SET_FOLLOW,
   SET_FOLLOWING,
   REMOVE_FOLLOWING,
+  UPDATE_USER_INFO,
 } from "./types";
 
 const initialState = {
@@ -31,6 +32,12 @@ const reducer = (state = initialState, action) => {
         userId,
         userAccountName,
         userProfile,
+      };
+
+    case UPDATE_USER_INFO:
+      return {
+        ...state,
+        userAccountName: action.userAccountName,
       };
 
     case LOGOUT:
