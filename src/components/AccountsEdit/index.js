@@ -6,14 +6,60 @@ import React, {
   // useCallback,
 } from "react";
 import { Link, useHistory } from "react-router-dom";
-//   import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-//   import { getFollowingUserFeeds } from "../../redux/actions";
+import { editUserInfo, getUserInfo } from "../../redux/actions";
 import Header from "../Header";
 import "../../resources/button.css";
 import "./accountsEdit.css";
 
 const AccountsEdit = () => {
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+
+  const dispatch = useDispatch();
+
+  const userId = useSelector((state) => state.userId);
+
+  const changeValue = (state, setState) => {
+    setIsDisabled(false);
+    setState(state);
+  };
+
+  const editUserInfoBtn = async (e) => {
+    e.preventDefault();
+    // setValidContent(``);
+
+    let userData = { id: userId, userName, phoneNumber, email };
+    const editUserInfoData = await dispatch(editUserInfo(userData));
+
+    const { status, userInfoData } = editUserInfoData;
+
+    if (status === 200 || status === 201) {
+      alert(`${userName}님의 정보가 정상적으로 바뀌었습니다.`);
+      setIsDisabled(true);
+      console.log(userInfoData);
+    } else {
+      const errorMessage = editUserInfoData.message;
+    }
+  };
+
+  useEffect(async () => {
+    const getUserInfoData = await dispatch(getUserInfo(userId));
+    const { status, userInfo } = getUserInfoData;
+
+    if (status === 200 || status === 201) {
+      setEmail(userInfo.email);
+      setUserName(userInfo.userName);
+      setPhoneNumber(userInfo.phoneNumber);
+    } else {
+      const errorMessage = getUserInfoData.message;
+      alert(errorMessage);
+    }
+  }, []);
+
   return (
     <section className={"aedit-section "}>
       <Header />
@@ -42,9 +88,9 @@ const AccountsEdit = () => {
               </div>
               <div className={"aedit-header-right "}>
                 <h1 className={"aedit-header-username "}>UserName001</h1>
-                <button className={"white-blue-btn "}>
+                {/* <button className={"white-blue-btn "}>
                   프로필 사진 바꾸기
-                </button>
+                </button> */}
               </div>
             </div>
             <form className={"aedit-box-form "} method="POST">
@@ -57,7 +103,8 @@ const AccountsEdit = () => {
                     placeholder="이름"
                     type="text"
                     className={"aedit-box-el-content-input "}
-                    value={"name1"}
+                    value={userName}
+                    onChange={(e) => changeValue(e.target.value, setUserName)}
                   />
                 </div>
               </div>
@@ -70,7 +117,8 @@ const AccountsEdit = () => {
                     placeholder="이메일"
                     type="text"
                     className={"aedit-box-el-content-input "}
-                    value={"email@test.com"}
+                    value={email}
+                    onChange={(e) => changeValue(e.target.value, setEmail)}
                   />
                 </div>
               </div>
@@ -83,14 +131,21 @@ const AccountsEdit = () => {
                     placeholder="전화번호"
                     type="text"
                     className={"aedit-box-el-content-input "}
-                    value={"010-1234-1234"}
+                    value={phoneNumber}
+                    onChange={(e) =>
+                      changeValue(e.target.value, setPhoneNumber)
+                    }
                   />
                 </div>
               </div>
               <div className={"aedit-box-el mt-16 "}>
                 <aside className={"aedit-box-el-title "}></aside>
                 <div className={"aedit-box-el-content "}>
-                  <button className={"blue-white-btn "} disabled>
+                  <button
+                    className={"blue-white-btn "}
+                    disabled={isDisabled}
+                    onClick={editUserInfoBtn}
+                  >
                     제출
                   </button>
                 </div>

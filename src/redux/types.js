@@ -1,5 +1,6 @@
 export const EMAIL_SIGNUP = "EMAIL_SIGNUP";
 export const SAVE_USER_INFO = "SAVE_USER_INFO";
+export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
 export const LOGOUT = "LOGOUT";
 
 export const SET_FEEDS = "SET_FEEDS";
