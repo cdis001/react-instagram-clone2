@@ -142,18 +142,6 @@
   line-height: 18px;
 }
 
-.signin-invalid {
-  color: #ed4956;
-  font-size: 14px;
-  text-align: center;
-  line-height: 18px;
-  margin: 10px 40px;
-}
-
-.hide-content {
-  display: none;
-}
-
 .terms-service {
   color: #8e8e8e;
   font-size: 12px;

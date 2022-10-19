@@ -34,12 +34,6 @@ const reducer = (state = initialState, action) => {
         userProfile,
       };
 
-    case UPDATE_USER_INFO:
-      return {
-        ...state,
-        userAccountName: action.userAccountName,
-      };
-
     case LOGOUT:
       return {
         token: "",

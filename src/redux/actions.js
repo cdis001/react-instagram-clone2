@@ -101,6 +101,25 @@ export const validationAccountName = async (accountName) => {
   };
 };
 
+export const validationPhoneNumber = async (phoneNumber) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.get(
+        "/api/auth/phoneNumberValidation" + phoneNumber
+      );
+      const { status, data } = result;
+
+      if (status === 200) {
+        return { status, result: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
 export const getUserInfo = async (id) => {
   return async (dispatch) => {
     try {
@@ -126,9 +145,8 @@ export const editUserInfo = async (userData) => {
       const { status, data } = result;
 
       if (status === 200 || status === 201) {
-        dispatch(await updateUserInfo(data.userName));
+        return { status, userInfo: data };
       }
-      return { status, userInfo: data };
     } catch (err) {
       const errorMessage = err.response.data;
       const { statusCode, message } = errorMessage;
@@ -446,13 +464,6 @@ const saveUserInfo = async (id, accountName, token, profile) => {
     userId: id,
     userAccountName: accountName,
     userProfile: profile,
-  };
-};
-
-const updateUserInfo = async (userName) => {
-  return {
-    type: UPDATE_USER_INFO,
-    userAccountName: userName,
   };
 };
 

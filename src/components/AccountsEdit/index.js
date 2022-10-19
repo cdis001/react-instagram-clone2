@@ -8,7 +8,12 @@ import React, {
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { editUserInfo, getUserInfo } from "../../redux/actions";
+import {
+  editUserInfo,
+  getUserInfo,
+  validationEmail,
+  validationPhoneNumber,
+} from "../../redux/actions";
 import Header from "../Header";
 import "../../resources/button.css";
 import "./accountsEdit.css";
@@ -18,10 +23,12 @@ const AccountsEdit = () => {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [validContent, setValidContent] = useState("");
 
   const dispatch = useDispatch();
 
   const userId = useSelector((state) => state.userId);
+  const userAccountName = useSelector((state) => state.userAccountName);
 
   const changeValue = (state, setState) => {
     setIsDisabled(false);
@@ -30,7 +37,7 @@ const AccountsEdit = () => {
 
   const editUserInfoBtn = async (e) => {
     e.preventDefault();
-    // setValidContent(``);
+    setValidContent(``);
 
     let userData = { id: userId, userName, phoneNumber, email };
     const editUserInfoData = await dispatch(editUserInfo(userData));
@@ -44,6 +51,30 @@ const AccountsEdit = () => {
     } else {
       const errorMessage = editUserInfoData.message;
     }
+  };
+
+  const isEmail = async (text) => {
+    const emailRegex =
+      /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+
+    console.log(text);
+    if (emailRegex.test(text)) {
+      const { result } = await dispatch(validationEmail(email));
+
+      return result.code;
+    }
+    return false;
+  };
+
+  const isPhoneNumber = async (text) => {
+    const phoneRegex = /^((01[1|6|7|8|9])[1-9]+[0-9]{6,7})|(010[1-9][0-9]{7})$/;
+
+    if (phoneRegex.test(text)) {
+      const { result } = await dispatch(validationPhoneNumber(email));
+
+      return result.code;
+    }
+    return false;
   };
 
   useEffect(async () => {
@@ -87,10 +118,10 @@ const AccountsEdit = () => {
                 </button>
               </div>
               <div className={"aedit-header-right "}>
-                <h1 className={"aedit-header-username "}>UserName001</h1>
-                {/* <button className={"white-blue-btn "}>
+                <h1 className={"aedit-header-username "}>{userAccountName}</h1>
+                <button className={"white-blue-btn "}>
                   프로필 사진 바꾸기
-                </button> */}
+                </button>
               </div>
             </div>
             <form className={"aedit-box-form "} method="POST">
@@ -119,6 +150,7 @@ const AccountsEdit = () => {
                     className={"aedit-box-el-content-input "}
                     value={email}
                     onChange={(e) => changeValue(e.target.value, setEmail)}
+                    // valueCheck={isEmail}
                   />
                 </div>
               </div>
@@ -135,7 +167,23 @@ const AccountsEdit = () => {
                     onChange={(e) =>
                       changeValue(e.target.value, setPhoneNumber)
                     }
+                    // valueCheck={isPhoneNumber}
                   />
+                </div>
+              </div>
+              <div className={"aedit-box-el mt-16 "}>
+                <aside className={"aedit-box-el-title "}></aside>
+                <div className={"aedit-box-el-content "}>
+                  <p
+                    aria-atomic={true}
+                    className={
+                      validContent.length > 0
+                        ? "signin-invalid"
+                        : "hide-content"
+                    }
+                  >
+                    {validContent}
+                  </p>
                 </div>
               </div>
               <div className={"aedit-box-el mt-16 "}>
