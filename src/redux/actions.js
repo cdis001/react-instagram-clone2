@@ -8,6 +8,7 @@ import {
   SET_FOLLOWING,
   REMOVE_FOLLOWING,
   UPDATE_USER_INFO,
+  SET_PROFILE,
 } from "./types";
 
 axios.defaults.withCredentials = true;
@@ -141,6 +142,24 @@ export const editUserInfo = async (userData) => {
   return async (dispatch) => {
     try {
       const result = await axios.post("/api/users", userData);
+
+      const { status, data } = result;
+
+      if (status === 200 || status === 201) {
+        return { status, userInfo: data };
+      }
+    } catch (err) {
+      const errorMessage = err.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const updateProfile = async (userData) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.patch("/api/profiles", userData);
 
       const { status, data } = result;
 
@@ -463,6 +482,13 @@ const saveUserInfo = async (id, accountName, token, profile) => {
     token,
     userId: id,
     userAccountName: accountName,
+    userProfile: profile,
+  };
+};
+
+const setProfile = async (profile) => {
+  return {
+    type: SET_PROFILE,
     userProfile: profile,
   };
 };

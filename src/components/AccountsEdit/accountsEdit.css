@@ -75,6 +75,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .aedit-header-username {
@@ -98,6 +99,7 @@
   line-height: normal;
   padding: 0;
   text-align: start;
+  cursor: pointer;
 }
 
 .nav-title-active {
