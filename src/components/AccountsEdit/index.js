@@ -12,8 +12,35 @@ import {
 } from "../../redux/actions";
 import Header from "../Header";
 import MenuBox from "../MenuBox";
+import EditNav from "../EditNav";
 import "../../resources/button.css";
 import "./accountsEdit.css";
+
+const AccountEditInput = ({
+  title,
+  placeholder,
+  value,
+  onChange,
+  valueCheck,
+}) => {
+  return (
+    <div className={"aedit-box-el "}>
+      <aside className={"aedit-box-el-title "}>
+        <label>{title}</label>
+      </aside>
+      <div className={"aedit-box-el-content "}>
+        <input
+          placeholder={title}
+          type="text"
+          className={"aedit-box-el-content-input "}
+          value={value}
+          onChange={onChange}
+          valueCheck={valueCheck}
+        />
+      </div>
+    </div>
+  );
+};
 
 const AccountsEdit = () => {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -173,20 +200,7 @@ const AccountsEdit = () => {
       <Header />
       <div className={"aedit-content-container "}>
         <div className={"aedit-content-box "}>
-          <ul className={"aedit-box-left-nav "}>
-            <li>
-              <Link to={"/accounts/edit"}>
-                <div className={"aedit-box-left-nav-title nav-title-active"}>
-                  프로필 편집
-                </div>
-              </Link>
-            </li>
-            <li>
-              <Link to={"/accounts/edit"}>
-                <div className={"aedit-box-left-nav-title "}>비밀번호 변경</div>
-              </Link>
-            </li>
-          </ul>
+          <EditNav />
           <article className={"aedit-box-content "}>
             <div className={"aedit-box-header "}>
               <div className={"aedit-header-left "}>
@@ -219,52 +233,23 @@ const AccountsEdit = () => {
               </div>
             </div>
             <form className={"aedit-box-form "} method="POST">
-              <div className={"aedit-box-el "}>
-                <aside className={"aedit-box-el-title "}>
-                  <label>이름</label>
-                </aside>
-                <div className={"aedit-box-el-content "}>
-                  <input
-                    placeholder="이름"
-                    type="text"
-                    className={"aedit-box-el-content-input "}
-                    value={userName}
-                    onChange={(e) => changeValue(e.target.value, setUserName)}
-                  />
-                </div>
-              </div>
-              <div className={"aedit-box-el "}>
-                <aside className={"aedit-box-el-title "}>
-                  <label>이메일</label>
-                </aside>
-                <div className={"aedit-box-el-content "}>
-                  <input
-                    placeholder="이메일"
-                    type="text"
-                    className={"aedit-box-el-content-input "}
-                    value={email}
-                    onChange={(e) => changeValue(e.target.value, setEmail)}
-                    // valueCheck={isEmail}
-                  />
-                </div>
-              </div>
-              <div className={"aedit-box-el "}>
-                <aside className={"aedit-box-el-title "}>
-                  <label>전화번호</label>
-                </aside>
-                <div className={"aedit-box-el-content "}>
-                  <input
-                    placeholder="전화번호"
-                    type="text"
-                    className={"aedit-box-el-content-input "}
-                    value={phoneNumber}
-                    onChange={(e) =>
-                      changeValue(e.target.value, setPhoneNumber)
-                    }
-                    // valueCheck={isPhoneNumber}
-                  />
-                </div>
-              </div>
+              <AccountEditInput
+                title={"이름"}
+                value={userName}
+                onChange={(e) => changeValue(e.target.value, setUserName)}
+              />
+              <AccountEditInput
+                title={"이메일"}
+                value={email}
+                onChange={(e) => changeValue(e.target.value, setEmail)}
+                alueCheck={isEmail}
+              />
+              <AccountEditInput
+                title={"전화번호"}
+                value={phoneNumber}
+                onChange={(e) => changeValue(e.target.value, setPhoneNumber)}
+                valueCheck={isPhoneNumber}
+              />
               <div className={"aedit-box-el mt-16 "}>
                 <aside className={"aedit-box-el-title "}></aside>
                 <div className={"aedit-box-el-content "}>

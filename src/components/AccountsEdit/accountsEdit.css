@@ -12,23 +12,6 @@
   height: 900px;
 }
 
-.aedit-box-left-nav {
-  border-right: 1px solid rgb(219, 219, 219);
-  display: flex;
-  flex-basis: 236px;
-  flex-direction: column;
-  flex-grow: 0;
-  flex-shrink: 0;
-}
-
-.aedit-box-left-nav-title {
-  padding: 16px 16px 16px calc(32px - 2px);
-  color: rgb(38, 38, 38);
-  font-size: 16px;
-  line-height: 20px;
-  border-left: 2px solid transparent;
-}
-
 .aedit-box-content {
   align-items: stretch;
   border: 0;
@@ -100,11 +83,6 @@
   padding: 0;
   text-align: start;
   cursor: pointer;
-}
-
-.nav-title-active {
-  font-weight: 600;
-  border-left: 2px solid rgb(38, 38, 38);
 }
 
 .aedit-box-form {
