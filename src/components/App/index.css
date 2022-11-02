@@ -178,3 +178,15 @@ button {
   position: fixed;
   top: 358px;
 }
+
+.signin-invalid {
+  color: #ed4956;
+  font-size: 14px;
+  text-align: center;
+  line-height: 18px;
+  margin: 10px 40px;
+}
+
+.hide-content {
+  display: none;
+}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { faCog, faHeart, faComment } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -47,9 +47,13 @@ const UserPageBtns = () => {
 };
 
 const MyPageBtns = () => {
+  let history = useHistory();
   return (
     <div className={"feed-page-btns"}>
-      <button className={"feed-page-profile-setting margin-l-20"}>
+      <button
+        className={"feed-page-profile-setting margin-l-20"}
+        onClick={() => history.push("/accounts/edit")}
+      >
         프로필 편집
       </button>
       <button className={"feed-page-user-setting"}>
@@ -73,6 +77,13 @@ const UserPage = () => {
   const userName = location.pathname.slice(1);
 
   const dispatch = useDispatch();
+  const userProfile = useSelector((state) => state.userProfile);
+  const following = useSelector((state) => state.userFollowing);
+  const follows = useSelector((state) => state.userFollows);
+
+  // console.log(!!userProfile);
+  // console.log(following);
+  // console.log(follows);
 
   useEffect(async () => {
     const { feeds, status } = await dispatch(getOneUserFeeds(userName, index));
@@ -89,7 +100,7 @@ const UserPage = () => {
       <div className={"feed-page-container"}>
         <header className={"feed-page-header"}>
           <div className={"feed-page-user-photo"}>
-            <img />
+            {!!userProfile ? <img src={userProfile} /> : <img />}
           </div>
           <div className={"feed-page-user-content"}>
             <div className={"feed-page-user-inform"}>
@@ -99,17 +110,20 @@ const UserPage = () => {
             <ul className={"feed-page-header-ul"}>
               <li>
                 <span>
-                  게시물 <span className={"font-weight-600"}>10</span>
+                  게시물{" "}
+                  <span className={"font-weight-600"}>{feedsData.length}</span>
                 </span>
               </li>
               <li>
                 <span>
-                  팔로워 <span className={"font-weight-600"}>1000</span>
+                  팔로워{" "}
+                  <span className={"font-weight-600"}>{follows.length}</span>
                 </span>
               </li>
               <li>
                 <span>
-                  팔로우 <span className={"font-weight-600"}>100</span>
+                  팔로우{" "}
+                  <span className={"font-weight-600"}>{following.length}</span>
                 </span>
               </li>
             </ul>

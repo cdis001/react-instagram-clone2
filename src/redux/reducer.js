@@ -1,10 +1,12 @@
 import {
   SAVE_USER_INFO,
+  SET_PROFILE,
   LOGOUT,
   EMAIL_SIGNUP,
   SET_FOLLOW,
   SET_FOLLOWING,
   REMOVE_FOLLOWING,
+  UPDATE_USER_INFO,
 } from "./types";
 
 const initialState = {
@@ -14,6 +16,7 @@ const initialState = {
   userAccountName: "",
   userFollows: [],
   userFollowing: [],
+  userProfile: "",
 };
 
 const reducer = (state = initialState, action) => {
@@ -22,8 +25,21 @@ const reducer = (state = initialState, action) => {
       return { ...state, result: action.payload };
 
     case SAVE_USER_INFO:
-      const { token, userAccountName, userId } = action;
-      return { ...state, isLogin: true, token, userId, userAccountName };
+      const { token, userAccountName, userId, userProfile } = action;
+      return {
+        ...state,
+        isLogin: true,
+        token,
+        userId,
+        userAccountName,
+        userProfile,
+      };
+
+    case SET_PROFILE:
+      return {
+        ...state,
+        userProfile: action.userProfile,
+      };
 
     case LOGOUT:
       return {

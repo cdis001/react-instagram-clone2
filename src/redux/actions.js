@@ -7,6 +7,8 @@ import {
   SET_FOLLOW,
   SET_FOLLOWING,
   REMOVE_FOLLOWING,
+  UPDATE_USER_INFO,
+  SET_PROFILE,
 } from "./types";
 
 axios.defaults.withCredentials = true;
@@ -46,9 +48,10 @@ export const loginRequest = async (userData) => {
       });
       // console.log(loginData);
       const { status, data } = loginData;
-      const { id, accessToken, accountName, follower, following } = data;
+      const { id, accessToken, accountName, follower, following, profile } =
+        data;
       if (accessToken) {
-        dispatch(await saveUserInfo(id, accountName, accessToken));
+        dispatch(await saveUserInfo(id, accountName, accessToken, profile));
       }
       if (follower.length > 0 || following.length > 0) {
         dispatch(await setFollow(follower, following));
@@ -93,6 +96,99 @@ export const validationAccountName = async (accountName) => {
       }
     } catch (e) {
       const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const validationPhoneNumber = async (phoneNumber) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.get(
+        "/api/auth/phoneNumberValidation" + phoneNumber
+      );
+      const { status, data } = result;
+
+      if (status === 200) {
+        return { status, result: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const getUserInfo = async (id) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.get(`/api/users/${id}`);
+      const { status, data } = result;
+
+      if (status === 200) {
+        return { status, userInfo: data };
+      }
+    } catch (e) {
+      const errorMessage = e.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const editUserInfo = async (userData) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.post("/api/users", userData);
+
+      const { status, data } = result;
+
+      if (status === 200 || status === 201) {
+        return { status, userInfo: data };
+      }
+    } catch (err) {
+      const errorMessage = err.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const updateProfile = async (userData) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.patch("/api/profiles", userData);
+
+      const { status, data } = result;
+
+      if (status === 200 || status === 201) {
+        dispatch(await setProfile(data.photo));
+
+        return { status, userInfo: data };
+      }
+    } catch (err) {
+      const errorMessage = err.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const deleteProfile = async (userId) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.delete(`/api/profiles/user/${userId}`);
+
+      const { status, data } = result;
+
+      if (status === 200 || status === 201) {
+        await setProfile("");
+        return { status };
+      }
+    } catch (err) {
+      const errorMessage = err.response.data;
       const { statusCode, message } = errorMessage;
       return { status: statusCode, message };
     }
@@ -399,7 +495,7 @@ export const deleteComment = async (commentId, userId) => {
   };
 };
 
-const saveUserInfo = async (id, accountName, token) => {
+const saveUserInfo = async (id, accountName, token, profile) => {
   await localStorage.setItem("token", token);
 
   return {
@@ -407,6 +503,14 @@ const saveUserInfo = async (id, accountName, token) => {
     token,
     userId: id,
     userAccountName: accountName,
+    userProfile: profile,
+  };
+};
+
+const setProfile = async (profile) => {
+  return {
+    type: SET_PROFILE,
+    userProfile: profile,
   };
 };
 

@@ -11,6 +11,7 @@ const MenuBox = ({ menus }) => {
             key={data.id}
             className={data.buttonStyle}
             onClick={data.onClick}
+            type={!!data.type ? "button" : data.type}
           >
             {data.title}
           </button>
