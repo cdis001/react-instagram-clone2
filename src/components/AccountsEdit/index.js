@@ -8,6 +8,7 @@ import {
   validationEmail,
   validationPhoneNumber,
   updateProfile,
+  deleteProfile,
 } from "../../redux/actions";
 import Header from "../Header";
 import MenuBox from "../MenuBox";
@@ -47,9 +48,25 @@ const AccountsEdit = () => {
     if (status === 200 || status === 201) {
       alert(`${userName}님의 정보가 정상적으로 바뀌었습니다.`);
       setIsDisabled(true);
-      console.log(userInfoData);
     } else {
       const errorMessage = editUserInfoData.message;
+    }
+  };
+
+  const _deleteProfileBtn = async (e) => {
+    e.preventDefault();
+
+    const deleteProfileRequest = await dispatch(deleteProfile(userId));
+
+    const { status } = deleteProfileRequest;
+
+    if (status === 200 || status === 201) {
+      setShowMenu(false);
+      setPreviewImg("");
+      alert(`${userName}님의 프로필이 삭제 되었습니다.`);
+    } else {
+      const errorMessage = deleteProfileRequest.message;
+      alert(errorMessage);
     }
   };
 
@@ -117,17 +134,14 @@ const AccountsEdit = () => {
     {
       id: 1,
       title: "프로필 사진 업로드",
-      onClick: () => {
-        const fileUploadInput = document.querySelector("#file-upload");
-        fileUploadInput.click();
-      },
+      onClick: _fileUploadInput,
       buttonStyle: "menu-blue-b",
       type: "submit",
     },
     {
       id: 2,
       title: "프로필 사진 삭제",
-      onClick: () => {},
+      onClick: _deleteProfileBtn,
       buttonStyle: "menu-red-b",
     },
     {

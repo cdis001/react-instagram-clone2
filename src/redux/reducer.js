@@ -35,6 +35,12 @@ const reducer = (state = initialState, action) => {
         userProfile,
       };
 
+    case SET_PROFILE:
+      return {
+        ...state,
+        userProfile: action.userProfile,
+      };
+
     case LOGOUT:
       return {
         token: "",
@@ -44,13 +50,6 @@ const reducer = (state = initialState, action) => {
         userFollows: [],
         userFollowing: [],
       };
-
-    case SET_PROFILE:
-      return {
-        ...state,
-        userProfile: action.userProfile,
-      };
-      break;
 
     case SET_FOLLOWING:
       const { newFollowing } = action;

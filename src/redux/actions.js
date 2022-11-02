@@ -164,7 +164,28 @@ export const updateProfile = async (userData) => {
       const { status, data } = result;
 
       if (status === 200 || status === 201) {
+        dispatch(await setProfile(data.photo));
+
         return { status, userInfo: data };
+      }
+    } catch (err) {
+      const errorMessage = err.response.data;
+      const { statusCode, message } = errorMessage;
+      return { status: statusCode, message };
+    }
+  };
+};
+
+export const deleteProfile = async (userId) => {
+  return async (dispatch) => {
+    try {
+      const result = await axios.delete(`/api/profiles/user/${userId}`);
+
+      const { status, data } = result;
+
+      if (status === 200 || status === 201) {
+        await setProfile("");
+        return { status };
       }
     } catch (err) {
       const errorMessage = err.response.data;
